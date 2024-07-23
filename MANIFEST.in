@@ -1,4 +1,4 @@
-graft src
+graft src/rer
 graft docs
 include *.rst
 exclude tox.ini

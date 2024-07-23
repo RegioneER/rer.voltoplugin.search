@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from plone import api
 from plone.api.exc import InvalidParameterError
 from Products.CMFCore.utils import getToolByName
-from .interfaces import IRERVoltoSearchCustomFilters
+from rer.volto.search.interfaces import IRERVoltoSearchCustomFilters
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.globalrequest import getRequest
@@ -22,7 +23,7 @@ except ImportError:
 
 
 @implementer(IVocabularyFactory)
-class IndexesVocabulary:
+class IndexesVocabulary(object):
     """
     Vocabulary factory for allowable indexes in catalog.
     """
@@ -37,7 +38,7 @@ class IndexesVocabulary:
 
 
 @implementer(IVocabularyFactory)
-class AdvancedFiltersVocabulary:
+class AdvancedFiltersVocabulary(object):
     """
     Vocabulary factory for list of advanced filters
     """
@@ -65,7 +66,7 @@ class AdvancedFiltersVocabulary:
 
 
 @implementer(IVocabularyFactory)
-class GroupingTypesVocabulary:
+class GroupingTypesVocabulary(object):
     """ """
 
     def __call__(self, context):

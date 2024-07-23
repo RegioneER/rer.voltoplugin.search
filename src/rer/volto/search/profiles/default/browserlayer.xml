@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer interface=".interfaces.IRERVoltoSearchLayer"
-         name=""
+  <layer interface="rer.volto.search.interfaces.IRERVoltoSearchLayer"
+         name="rer.volto.search"
   />
 </layers>

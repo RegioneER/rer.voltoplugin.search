@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from plone.restapi.services import Service
-from .restapi.utils import get_indexes_mapping
-from .restapi.utils import get_types_groups
+from rer.volto.search.restapi.utils import get_indexes_mapping
+from rer.volto.search.restapi.utils import get_types_groups
 from zope.interface import implementer
 from zope.publisher.interfaces import IPublishTraverse
 

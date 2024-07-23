@@ -9,8 +9,8 @@
       name="rer-search-settings"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.RERVoltoSearchControlPanel"
-      permission=".ManageSearchSettings"
-      layer=".interfaces.IRERVoltoSearchLayer"
+      permission="rer.volto.search.ManageSearchSettings"
+      layer="rer.volto.search.interfaces.IRERVoltoSearchLayer"
       />
 
 </configure>

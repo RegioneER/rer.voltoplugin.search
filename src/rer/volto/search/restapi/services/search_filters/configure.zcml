@@ -9,7 +9,7 @@
       factory=".get.SearchFiltersGet"
       for="Products.CMFCore.interfaces.ISiteRoot"
       permission="zope2.View"
-      layer=".interfaces.IRERVoltoSearchLayer"
+      layer="rer.volto.search.interfaces.IRERVoltoSearchLayer"
       name="@search-filters"
       />
 

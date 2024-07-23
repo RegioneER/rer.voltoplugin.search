@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from plone import api
-from  import _
-from .interfaces import IRERVoltoSearchCustomFilters
-from .interfaces import IRERVoltoSearchSettings
+from rer.volto.search import _
+from rer.volto.search.interfaces import IRERVoltoSearchCustomFilters
+from rer.volto.search.interfaces import IRERVoltoSearchSettings
 from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 from zope.globalrequest import getRequest

@@ -3,7 +3,7 @@ from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.app.testing import TEST_USER_ID
 from plone.restapi.testing import RelativeSession
-from .testing import RESTAPI_TESTING
+from rer.volto.search.testing import RESTAPI_TESTING
 from transaction import commit
 
 import unittest

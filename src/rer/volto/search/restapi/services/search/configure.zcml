@@ -8,7 +8,7 @@
       factory=".get.SearchGet"
       for="zope.interface.Interface"
       permission="zope2.View"
-      layer=".interfaces.IRERVoltoSearchLayer"
+      layer="rer.volto.search.interfaces.IRERVoltoSearchLayer"
       name="@search"
       />
 
@@ -17,7 +17,7 @@
       factory=".get.SearchLocalGet"
       for="zope.interface.Interface"
       permission="zope2.View"
-      layer=".interfaces.IRERVoltoSearchLayer"
+      layer="rer.volto.search.interfaces.IRERVoltoSearchLayer"
       name="@search-local"
       />
 </configure>
