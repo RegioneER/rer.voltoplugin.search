@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-from rer.volto.search import _
-from rer.volto.search.interfaces import IRERSearchCustomFilters
+from  import _
+from .interfaces import IRERSearchCustomFilters
 from zope.component import adapter
 from zope.i18n import translate
 from zope.interface import implementer

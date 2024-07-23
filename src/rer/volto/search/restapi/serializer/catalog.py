@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from copy import deepcopy
 from plone import api
 from plone.indexer.interfaces import IIndexableObject
@@ -7,10 +6,10 @@ from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.serializer.catalog import (
     LazyCatalogResultSerializer as BaseSerializer,
 )
-from rer.volto.search import _
-from rer.volto.search.interfaces import IRERVoltoSearchLayer
-from rer.volto.search.restapi.utils import get_indexes_mapping
-from rer.volto.search.restapi.utils import get_types_groups
+from  import _
+from .interfaces import IRERVoltoSearchLayer
+from .restapi.utils import get_indexes_mapping
+from .restapi.utils import get_types_groups
 from zope.component import adapter
 from zope.component import queryMultiAdapter
 from zope.i18n import translate

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from copy import deepcopy
 from plone import api
 from plone.api.exc import InvalidParameterError
@@ -8,9 +7,9 @@ from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
-from rer.volto.search import _
-from rer.volto.search.restapi.utils import get_indexes_mapping
-from rer.volto.search.restapi.utils import get_types_groups
+from  import _
+from .restapi.utils import get_indexes_mapping
+from .restapi.utils import get_types_groups
 from zope.component import getUtility
 from zope.i18n import translate
 

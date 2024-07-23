@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer remove="True" name="rer.volto.search" />
+  <layer name=""
+         remove="True"
+  />
 </layers>

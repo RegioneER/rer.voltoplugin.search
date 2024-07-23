@@ -2,7 +2,7 @@
 <object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
         name="portal_controlpanel"
         purge="False"
-        i18n:domain="rer.volto.search"
+        i18n:domain=""
 >
 
   <configlet action_id="RERVoltoSearchSettings"
@@ -15,7 +15,7 @@
              visible="True"
              i18n:attributes="title"
   >
-    <permission>rer.volto.search: Manage Search Settings</permission>
+    <permission>: Manage Search Settings</permission>
   </configlet>
 
 </object>

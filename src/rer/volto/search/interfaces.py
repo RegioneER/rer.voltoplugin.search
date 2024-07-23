@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 from plone.restapi.controlpanels import IControlpanel
 from plone.supermodel import model
-from rer.volto.search import _
+from  import _
 from zope import schema
 from zope.interface import Attribute
 from zope.interface import Interface
@@ -13,7 +12,7 @@ class IRERVoltoSearchControlpanel(IControlpanel):
 
 
 class IRERVoltoSearchLayer(IDefaultBrowserLayer):
-    """A layer specific for rer.volto.search"""
+    """A layer specific for """
 
 
 class IRERVoltoSearchCustomFilters(Interface):

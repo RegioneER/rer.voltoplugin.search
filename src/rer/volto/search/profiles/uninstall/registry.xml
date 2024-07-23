@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-          i18n:domain="rer.volto.search"
+          i18n:domain=""
 >
 
-  <records interface="rer.volto.search.interfaces.IRERVoltoSearchSettings"
+  <records interface=".interfaces.IRERVoltoSearchSettings"
            remove="true"
   />
 

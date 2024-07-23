@@ -10,7 +10,7 @@
   <!-- enable controlpanel on plone.restapi -->
   <adapter
       factory=".search_settings.RERVoltoSearchSettingsControlpanel"
-      provides="rer.volto.search.interfaces.IRERVoltoSearchControlpanel"
+      provides=".interfaces.IRERVoltoSearchControlpanel"
       name="rer-search-settings"
       />
 

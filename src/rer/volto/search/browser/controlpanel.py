@@ -1,6 +1,6 @@
 from plone.app.registry.browser import controlpanel
-from rer.volto.search import _
-from rer.volto.search.interfaces import IRERVoltoSearchSettings
+from  import _
+from .interfaces import IRERVoltoSearchSettings
 
 
 class RERVoltoSearchForm(controlpanel.RegistryEditForm):

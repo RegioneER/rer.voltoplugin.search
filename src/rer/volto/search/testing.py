@@ -6,7 +6,7 @@ from plone.app.testing import PloneSandboxLayer
 from plone.testing.zope import WSGI_SERVER_FIXTURE
 
 import plone.restapi
-import rer.volto.search
+import 
 
 
 class TestLayer(PloneSandboxLayer):
@@ -17,10 +17,10 @@ class TestLayer(PloneSandboxLayer):
         # The z3c.autoinclude feature is disabled in the Plone fixture base
         # layer.
         self.loadZCML(package=plone.restapi)
-        self.loadZCML(package=rer.volto.search)
+        self.loadZCML(package=)
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, "rer.volto.search:default")
+        applyProfile(portal, ":default")
 
 
 FIXTURE = TestLayer()

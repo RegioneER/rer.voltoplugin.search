@@ -2,7 +2,7 @@
 <rolemap>
   <permissions>
     <permission acquire="True"
-                name="rer.volto.search: Manage Search Settings"
+                name=": Manage Search Settings"
     >
       <role name="Manager" />
       <role name="Site Administrator" />
