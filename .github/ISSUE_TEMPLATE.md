@@ -1,4 +1,4 @@
-* collective.volto.sitesettings version:
+* rer.volto.search version:
 * Plone Version:
 * Python version:
 * Operating System: Linux

@@ -3,7 +3,7 @@ import pkg_resources
 import subprocess
 
 
-domain = "collective.volto.sitesettings"
+domain = "rer.volto.search"
 os.chdir(pkg_resources.resource_filename(domain, ""))
 os.chdir("../../../../")
 target_path = "src/collective/volto/sitesettings/"

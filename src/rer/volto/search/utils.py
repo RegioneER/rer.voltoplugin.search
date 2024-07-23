@@ -1,4 +1,4 @@
-from collective.volto.sitesettings.interfaces import (
+from rer.volto.search.interfaces import (
     ICollectiveVoltoSitesettingsAdditionalSiteSchema,
 )
 

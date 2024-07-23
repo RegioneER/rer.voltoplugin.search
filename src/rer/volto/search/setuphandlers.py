@@ -7,12 +7,12 @@ class HiddenProfiles:
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller."""
         return [
-            "collective.volto.sitesettings:uninstall",
+            "rer.volto.search:uninstall",
         ]
 
     def getNonInstallableProducts(self):
         """Hide the upgrades package from site-creation and quickinstaller."""
-        return ["collective.volto.sitesettings.upgrades"]
+        return ["rer.volto.search.upgrades"]
 
 
 def post_install(context):

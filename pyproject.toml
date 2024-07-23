@@ -120,11 +120,11 @@ Zope = [
 ]
 'plone.base' = [
   'plone.batching', 'plone.registry', 'plone.schema','plone.z3cform',
-  'Products.CMFCore', 'Products.CMFDynamicViewFTI',
+  'Products.CMFCore', 'Products.CMFDynamicViewFTI', 'plone.base'
 ]
 python-dateutil = ['dateutil']
-ignore-packages = ['Products.CMFPlone', 'Products.GenericSetup', 'collective.MockMailHost', 'plone.app.registry', 'plone.restapi', 'plone.testing', 'plone.volto', 'zestreleaser.towncrier', 'zest.releaser', 'pytest', 'pytest-cov', 'pytest-plone', 'pytest-docker', 'pytest-vcr', 'pytest-mock', 'gocept.pytestlayer', 'requests-mock', 'vcrpy']
-Plone = ['Products.CMFPlone', 'Products.CMFCore', 'Products.GenericSetup', 'Products.PluggableAuthService', 'Products.PlonePAS']
+ignore-packages = ['Products.CMFPlone', 'Products.GenericSetup', 'collective.MockMailHost', 'plone.app.registry', 'plone.restapi', 'plone.testing', 'plone.volto', 'zestreleaser.towncrier', 'zest.releaser', 'pytest', 'pytest-cov', 'pytest-plone', 'pytest-docker', 'pytest-vcr', 'pytest-mock', 'gocept.pytestlayer', 'requests-mock', 'vcrpy', 'rer.solrpush','Missing', 'plone.base', 'plone.indexer', 'plone.memoize', 'plone.registry', 'plone.supermodel', 'six']
+Plone = ['Products.CMFPlone', 'Products.CMFCore', 'Products.GenericSetup', 'Products.PluggableAuthService', 'Products.PlonePAS', 'plone.base.']
 
 ##
 # Add extra configuration options in .meta.toml:

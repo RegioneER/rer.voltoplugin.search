@@ -1,6 +1,5 @@
 from plone import api
 from plone.api.exc import InvalidParameterError
-from Products.CMFCore.utils import getToolByName
 from rer.volto.search.interfaces import IRERVoltoSearchCustomFilters
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
@@ -29,7 +28,7 @@ class IndexesVocabulary:
 
     def __call__(self, context):
         site = getSite()
-        pc = getToolByName(site, "portal_catalog")
+        pc = api.portal.get_tool(site, "portal_catalog")
         indexes = list(pc.indexes())
         indexes.sort()
         indexes = [SimpleTerm(i, i, i) for i in indexes]
