@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from rer.volto.search import _
 from rer.volto.search.interfaces import IRERSearchCustomFilters
 from zope.component import adapter
@@ -9,7 +8,7 @@ from zope.interface import Interface
 
 @adapter(Interface, Interface)
 @implementer(IRERSearchCustomFilters)
-class EventsAdapter(object):
+class EventsAdapter:
     """ """
 
     label = _("event_adapter_label", default="Events")

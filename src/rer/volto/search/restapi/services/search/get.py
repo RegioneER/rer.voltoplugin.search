@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from copy import deepcopy
 from plone import api
 from plone.api.exc import InvalidParameterError
@@ -50,7 +49,7 @@ class SearchGet(Service):
     @memoize
     def searchable_portal_types(self):
         groups = get_types_groups()
-        types = set([])
+        types = set()
         for group_id, group_data in groups.get("values", {}).items():
             if group_data.get("types", []):
                 types.update(group_data["types"])

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from copy import deepcopy
 from plone import api
 from plone.indexer.interfaces import IIndexableObject
@@ -24,10 +23,8 @@ import Missing
 @adapter(Lazy, IRERVoltoSearchLayer)
 class LazyCatalogResultSerializer(BaseSerializer):
     def __call__(self, fullobjects=False):
-        data = super(LazyCatalogResultSerializer, self).__call__(
-            fullobjects=fullobjects
-        )
-        # add facets informations
+        data = super().__call__(fullobjects=fullobjects)
+        # add facets information
         data.update({"facets": self.extract_facets(brains=self.lazy_resultset)})
         return data
 
@@ -72,7 +69,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
         We need to have the right count for groups facets because these are
         not proper facets, and the number of results should be the same also
         if we select a different group (groups only needs to show grouped
-        informations, not to filter).
+        information, not to filter).
         If we are filtering by type, this means that we need to do an another
         catalog search for get the proper counters for each group.
         """

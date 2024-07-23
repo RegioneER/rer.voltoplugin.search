@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.restapi.services import Service
 from rer.volto.search.restapi.utils import get_indexes_mapping
 from rer.volto.search.restapi.utils import get_types_groups

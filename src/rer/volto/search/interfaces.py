@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone.restapi.controlpanels import IControlpanel
 from plone.supermodel import model
 from rer.volto.search import _

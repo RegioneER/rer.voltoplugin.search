@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from plone import api
 from rer.volto.search import _
 from rer.volto.search.interfaces import IRERVoltoSearchCustomFilters
