@@ -2,6 +2,7 @@
 from copy import deepcopy
 from plone import api
 from plone.api.exc import InvalidParameterError
+from plone.base.interfaces.controlpanel import ISiteSchema
 from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
@@ -12,7 +13,6 @@ from rer.volto.search.restapi.utils import get_indexes_mapping
 from rer.volto.search.restapi.utils import get_types_groups
 from zope.component import getUtility
 from zope.i18n import translate
-from plone.base.interfaces.controlpanel import ISiteSchema
 
 
 try:
@@ -179,9 +179,6 @@ class SearchGet(Service):
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         site_title = getattr(site_settings, "site_title") or ""
-        if RER_THEME:
-            fields_value = getUtility(ICustomFields)
-            site_title = fields_value.titleLang(site_title)
         if six.PY2:
             site_title = site_title.decode("utf-8")
 
