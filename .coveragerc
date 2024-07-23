@@ -1,0 +1,6 @@
+[report]
+include =
+    src/rer/volto/search/*
+omit =
+    */test*
+    */upgrades/*

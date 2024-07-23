@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+        name="portal_controlpanel"
+        purge="False"
+        i18n:domain="rer.volto.search"
+>
+
+  <configlet action_id="RERVoltoSearchSettings"
+             appId="RERVoltoSearchSettings"
+             category="Products"
+             condition_expr=""
+             icon_expr=""
+             title="RER Search Settings"
+             url_expr="string:${portal_url}/@@rer-search-settings"
+             visible="True"
+             i18n:attributes="title"
+  >
+    <permission>rer.volto.search: Manage Search Settings</permission>
+  </configlet>
+
+</object>
