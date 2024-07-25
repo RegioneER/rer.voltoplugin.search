@@ -37,29 +37,42 @@ RER Volto Search
 Add-on for manage Search results in Volto.
 
 Features
---------
+========
 
 - Control panel in plone registry to manage Search settings.
 - Restapi endpoint that exposes these settings for Volto.
 
-@gdpr-cookie-settings
----------------------
+Vocabularies
+============
 
-Anonymous users can't access registry resources by default with plone.restapi (there is a special permission).
+rer.volto.search.vocabularies.AdvancedFiltersVocabulary
+-------------------------------------------------------
 
-To avoid enabling registry access to everyone, this package exposes a dedicated restapi route with GDPR cookie settings: *@gdpr-cookie-settings*::
+Vocabulary that returns the list of registered adapters for custom filters based on content-types.
 
-    > curl -i http://localhost:8080/Plone/@gdpr-cookie-settings -H 'Accept: application/json' --user admin:admin
+
+rer.volto.search.vocabularies.IndexesVocabulary
+-----------------------------------------------
+
+Vocabulary that returns the list of available indexes in portal_catalog.
+
+
+rer.volto.search.vocabularies.GroupingTypesVocabulary
+-----------------------------------------------------
+
+Vocabulary that returns the list of available portal_types.
+
+If rer.solr is installed, returns the list of portal_types indexed in SOLR, otherwise return ReallyUserFriendlyTypes Plone vocabulary.
 
 
 Volto integration
------------------
+=================
 
 To use this product in Volto, your Volto project needs to include a new plugin: https://github.com/collective/XXX
 
 
 Translations
-------------
+============
 
 This product has been translated into
 
@@ -68,7 +81,7 @@ This product has been translated into
 
 
 Installation
-------------
+============
 
 Install rer.volto.search by adding it to your buildout::
 
@@ -84,13 +97,13 @@ and then running ``bin/buildout``
 
 
 Contribute
-----------
+==========
 
 - Issue Tracker: https://github.com/collective/rer.volto.search/issues
 - Source Code: https://github.com/collective/rer.volto.search
 
 
 License
--------
+=======
 
 The project is licensed under the GPLv2.
