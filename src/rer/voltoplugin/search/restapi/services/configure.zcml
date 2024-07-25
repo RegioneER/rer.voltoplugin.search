@@ -4,6 +4,5 @@
     >
 
   <include package=".search" />
-  <include package=".search_filters" />
 
 </configure>

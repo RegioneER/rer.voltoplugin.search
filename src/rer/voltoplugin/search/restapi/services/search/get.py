@@ -2,14 +2,13 @@ from copy import deepcopy
 from plone import api
 from plone.api.exc import InvalidParameterError
 from plone.base.interfaces.controlpanel import ISiteSchema
-from plone.memoize.view import memoize
 from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
 from rer.voltoplugin.search import _
+from rer.voltoplugin.search.restapi.utils import get_facets_data
 from rer.voltoplugin.search.restapi.utils import get_indexes_mapping
-from rer.voltoplugin.search.restapi.utils import get_types_groups
 from zope.component import getUtility
 from zope.i18n import translate
 
@@ -45,27 +44,20 @@ class SearchGet(Service):
         except (KeyError, InvalidParameterError):
             return False
 
-    @property
-    @memoize
-    def searchable_portal_types(self):
-        groups = get_types_groups()
-        types = set()
-        for group_id, group_data in groups.get("values", {}).items():
-            if group_data.get("types", []):
-                types.update(group_data["types"])
-        return sorted(list(types))
-
     def reply(self):
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
         path_infos = self.get_path_infos(query=query)
-        groups = get_types_groups()
-        if "group" in query:
-            for group_id, group_data in groups.get("values", {}).items():
-                if query["group"] == group_id and group_data["types"]:
-                    query["portal_type"] = group_data["types"]
 
-            del query["group"]
+        if not query.get("SearchableText", ""):
+            return {
+                "@id": "http://localhost:8080/Plone/++api++/@rer-search?group=notizie",
+                "facets": [],
+                "items": [],
+                "items_total": 0,
+            }
+
+        self.filter_types(query)
         if self.solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
@@ -74,6 +66,16 @@ class SearchGet(Service):
         if path_infos:
             data["path_infos"] = path_infos
         return data
+
+    def filter_types(self, query):
+        if "group" in query:
+            group_value = query.get("group", "")
+            for mapping in get_facets_data()[0].get("items", []):
+                if mapping.get("id", "") == group_value:
+                    if mapping.get("items", {}):
+                        query["portal_type"] = list(mapping["items"].keys())
+            del query["group"]
+        return query
 
     def do_solr_search(self, query):
         query["facets"] = True
@@ -100,7 +102,7 @@ class SearchGet(Service):
 
     def remap_solr_facets(self, data, query):
         new_facets = {
-            "groups": get_types_groups(),
+            # "groups": get_types_groups(),
             "indexes": get_indexes_mapping(),
             "sites": {"order": [], "values": {}},
         }

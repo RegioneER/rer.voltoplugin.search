@@ -6,6 +6,8 @@ from zope.interface import Attribute
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
+import json
+
 
 class IRERVoltopluginSearchControlpanel(IControlpanel):
     """Marker interface"""
@@ -60,6 +62,30 @@ class IRERVoltopluginSearchSettings(model.Schema):
             "content-types.",
         ),
         required=False,
+        default=json.dumps(
+            [
+                {
+                    "label": {"it": "Pagine", "en": "Documents"},
+                    "portal_type": ["Document"],
+                },
+                {
+                    "label": {"it": "Notizie", "en": "News"},
+                    "portal_type": ["News Item", "ExternalNews"],
+                },
+                {
+                    "label": {"it": "Bandi", "en": "Announcements"},
+                    "portal_type": ["Bando"],
+                },
+                {
+                    "label": {"it": "File e immagini", "en": "Files and images"},
+                    "portal_type": ["File", "Image"],
+                },
+                {
+                    "label": {"it": "Eventi", "en": "Events"},
+                    "portal_type": ["Event"],
+                },
+            ]
+        ),
     )
 
     available_indexes = schema.SourceText(
@@ -69,4 +95,12 @@ class IRERVoltopluginSearchSettings(model.Schema):
             default="Select which additional filters to show in the column.",
         ),
         required=False,
+        default=json.dumps(
+            [
+                {
+                    "label": {"it": "Parole chiave", "en": "Keywords"},
+                    "index": "Subject",
+                },
+            ]
+        ),
     )

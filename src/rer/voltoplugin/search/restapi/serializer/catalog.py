@@ -6,13 +6,10 @@ from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.serializer.catalog import (
     LazyCatalogResultSerializer as BaseSerializer,
 )
-from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchLayer
-from rer.voltoplugin.search.restapi.utils import get_indexes_mapping
-from rer.voltoplugin.search.restapi.utils import get_types_groups
+from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import adapter
 from zope.component import queryMultiAdapter
-from zope.i18n import translate
 from zope.interface import implementer
 from ZTUtils.Lazy import Lazy
 
@@ -30,13 +27,21 @@ class LazyCatalogResultSerializer(BaseSerializer):
 
     def extract_facets(self, brains):
         pc = api.portal.get_tool(name="portal_catalog")
-        facets = {
-            "groups": self.get_groups_facets(brains=brains),
-            "indexes": get_indexes_mapping(),
-        }
+
+        facets = get_facets_data()
+
+        self.update_portal_type_facet(facet=facets[0])
+
         for brain in brains:
-            for index_id, index_settings in facets["indexes"].get("values", {}).items():
-                if index_settings.get("type", "") == "DateIndex":
+            for facet in facets:
+                index_id = facet.get("index", "")
+                index_type = facet.get("type", "")
+
+                if index_id == "portal_type":
+                    # special handle
+                    continue
+
+                if index_type == "DateIndex":
                     # skip it, we need to set some dates in the interface
                     continue
                 try:
@@ -45,26 +50,26 @@ class LazyCatalogResultSerializer(BaseSerializer):
                     # index is not a brain's metadata. Load item object
                     # (could be painful)
                     item = brain.getObject()
-                    adapter = queryMultiAdapter((item, pc), IIndexableObject)
-                    value = getattr(adapter, index_id, None)
+                    type_adapter = queryMultiAdapter((item, pc), IIndexableObject)
+                    value = getattr(type_adapter, index_id, None)
                 if not value or value == Missing.Value:
                     if not isinstance(value, bool) and not isinstance(value, int):
                         # bool and numbers can be False or 0
                         continue
                 if isinstance(value, list) or isinstance(value, tuple):
                     for single_value in value:
-                        if single_value not in index_settings["values"]:
-                            index_settings["values"][single_value] = 1
+                        if single_value not in facet["items"]:
+                            facet["items"][single_value] = 1
                         else:
-                            index_settings["values"][single_value] += 1
+                            facet["items"][single_value] += 1
                 else:
-                    if value not in index_settings["values"]:
-                        index_settings["values"][value] = 1
+                    if value not in facet["items"][single_value]:
+                        facet["items"][single_value][value] = 1
                     else:
-                        index_settings["values"][value] += 1
+                        facet["items"][single_value][value] += 1
         return facets
 
-    def get_groups_facets(self, brains):
+    def update_portal_type_facet(self, facet):
         """
         We need to have the right count for groups facets because these are
         not proper facets, and the number of results should be the same also
@@ -75,11 +80,6 @@ class LazyCatalogResultSerializer(BaseSerializer):
         """
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
-        groups = get_types_groups()
-        all_label = translate(
-            _("all_types_label", default="All content types"),
-            context=self.request,
-        )
 
         for key, value in query.items():
             if value in ["false", "False"]:
@@ -100,14 +100,14 @@ class LazyCatalogResultSerializer(BaseSerializer):
         portal_catalog = api.portal.get_tool(name="portal_catalog")
         brains_to_iterate = portal_catalog(**query)
         for brain in brains_to_iterate:
-            for group in groups.get("values", {}).values():
-                if brain.portal_type in group.get("types", []):
-                    group["count"] += 1
-
-        groups["values"][all_label]["count"] = getattr(
-            brains_to_iterate, "actual_result_count", len(brains_to_iterate)
-        )
-        return groups
+            for type_data in facet.get("items", []):
+                if type_data.get("id", "") == "all":
+                    # all
+                    type_data["items"][brain.portal_type] = 1
+                else:
+                    if brain.portal_type in type_data.get("items", {}):
+                        type_data["items"][brain.portal_type] += 1
+        return facet
 
     def filter_types(self, types):
         """

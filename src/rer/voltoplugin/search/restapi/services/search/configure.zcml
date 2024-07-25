@@ -9,7 +9,7 @@
       for="zope.interface.Interface"
       permission="zope2.View"
       layer="rer.voltoplugin.search.interfaces.IRERVoltopluginSearchLayer"
-      name="@search"
+      name="@rer-search"
       />
 
   <plone:service
