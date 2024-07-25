@@ -1,7 +1,7 @@
-* rer.volto.search version:
-* Plone Version:
-* Python version:
-* Operating System: Linux
+- rer.voltoplugin.search version:
+- Plone Version:
+- Python version:
+- Operating System: Linux
 
 ### Description
 

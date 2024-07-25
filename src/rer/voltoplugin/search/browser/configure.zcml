@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.voltoplugin.search"
+    >
+
+  <browser:page
+      name="rer-search-settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.RERVoltopluginSearchControlPanel"
+      permission="rer.voltoplugin.search.ManageSearchSettings"
+      layer="rer.voltoplugin.search.interfaces.IRERVoltopluginSearchLayer"
+      />
+
+</configure>

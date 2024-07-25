@@ -2,28 +2,28 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
    This text does not appear on PyPI or github. It is a comment.
 
-.. image:: https://github.com/collective/rer.volto.search/actions/workflows/plone-package.yml/badge.svg
-    :target: https://github.com/collective/rer.volto.search/actions/workflows/plone-package.yml
+.. image:: https://github.com/collective/rer.voltoplugin.search/actions/workflows/plone-package.yml/badge.svg
+    :target: https://github.com/collective/rer.voltoplugin.search/actions/workflows/plone-package.yml
 
-.. image:: https://coveralls.io/repos/github/collective/rer.volto.search/badge.svg?branch=main
-    :target: https://coveralls.io/github/collective/rer.volto.search?branch=main
+.. image:: https://coveralls.io/repos/github/collective/rer.voltoplugin.search/badge.svg?branch=main
+    :target: https://coveralls.io/github/collective/rer.voltoplugin.search?branch=main
     :alt: Coveralls
 
-.. image:: https://codecov.io/gh/collective/rer.volto.search/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/collective/rer.volto.search
+.. image:: https://codecov.io/gh/collective/rer.voltoplugin.search/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/collective/rer.voltoplugin.search
 
-.. image:: https://img.shields.io/pypi/v/rer.volto.search.svg
-    :target: https://pypi.python.org/pypi/rer.volto.search/
+.. image:: https://img.shields.io/pypi/v/rer.voltoplugin.search.svg
+    :target: https://pypi.python.org/pypi/rer.voltoplugin.search/
     :alt: Latest Version
 
-.. image:: https://img.shields.io/pypi/status/rer.volto.search.svg
-    :target: https://pypi.python.org/pypi/rer.volto.search
+.. image:: https://img.shields.io/pypi/status/rer.voltoplugin.search.svg
+    :target: https://pypi.python.org/pypi/rer.voltoplugin.search
     :alt: Egg Status
 
-.. image:: https://img.shields.io/pypi/pyversions/rer.volto.search.svg?style=plastic   :alt: Supported - Python Versions
+.. image:: https://img.shields.io/pypi/pyversions/rer.voltoplugin.search.svg?style=plastic   :alt: Supported - Python Versions
 
-.. image:: https://img.shields.io/pypi/l/rer.volto.search.svg
-    :target: https://pypi.python.org/pypi/rer.volto.search/
+.. image:: https://img.shields.io/pypi/l/rer.voltoplugin.search.svg
+    :target: https://pypi.python.org/pypi/rer.voltoplugin.search/
     :alt: License
 
 .. This README is meant for consumption by humans and pypi. Pypi can render rst files so please do not use Sphinx features.
@@ -31,7 +31,7 @@
    This text does not appear on pypi or github. It is a comment.
 
 ================
-RER Volto Search
+RER Voltoplugin Search
 ================
 
 Add-on for manage Search results in Volto.
@@ -45,19 +45,19 @@ Features
 Vocabularies
 ============
 
-rer.volto.search.vocabularies.AdvancedFiltersVocabulary
+rer.voltoplugin.search.vocabularies.AdvancedFiltersVocabulary
 -------------------------------------------------------
 
 Vocabulary that returns the list of registered adapters for custom filters based on content-types.
 
 
-rer.volto.search.vocabularies.IndexesVocabulary
+rer.voltoplugin.search.vocabularies.IndexesVocabulary
 -----------------------------------------------
 
 Vocabulary that returns the list of available indexes in portal_catalog.
 
 
-rer.volto.search.vocabularies.GroupingTypesVocabulary
+rer.voltoplugin.search.vocabularies.GroupingTypesVocabulary
 -----------------------------------------------------
 
 Vocabulary that returns the list of available portal_types.
@@ -83,14 +83,14 @@ This product has been translated into
 Installation
 ============
 
-Install rer.volto.search by adding it to your buildout::
+Install rer.voltoplugin.search by adding it to your buildout::
 
     [buildout]
 
     ...
 
     eggs =
-        rer.volto.search
+        rer.voltoplugin.search
 
 
 and then running ``bin/buildout``
@@ -99,8 +99,8 @@ and then running ``bin/buildout``
 Contribute
 ==========
 
-- Issue Tracker: https://github.com/collective/rer.volto.search/issues
-- Source Code: https://github.com/collective/rer.volto.search
+- Issue Tracker: https://github.com/collective/rer.voltoplugin.search/issues
+- Source Code: https://github.com/collective/rer.voltoplugin.search
 
 
 License

@@ -1,0 +1,55 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="rer.voltoplugin.search"
+    >
+
+  <i18n:registerTranslations directory="locales" />
+  <include file="permissions.zcml" />
+
+  <include package=".adapters" />
+  <include package=".browser" />
+  <include package=".restapi" />
+
+
+  <genericsetup:registerProfile
+      name="default"
+      title="RER: Voltoplugin Search"
+      description="Installs the rer.voltoplugin.search add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      post_handler=".setuphandlers.post_install"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="RER: Voltoplugin Search (uninstall)"
+      description="Uninstalls the rer.voltoplugin.search add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      post_handler=".setuphandlers.uninstall"
+      />
+
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="rer.voltoplugin.search-hiddenprofiles"
+      />
+
+  <!-- VOCABULARIES -->
+  <utility
+      name="rer.voltoplugin.search.vocabularies.IndexesVocabulary"
+      component=".vocabularies.IndexesVocabularyFactory"
+      />
+  <utility
+      name="rer.voltoplugin.search.vocabularies.AdvancedFiltersVocabulary"
+      component=".vocabularies.AdvancedFiltersVocabularyFactory"
+      />
+  <utility
+      name="rer.voltoplugin.search.vocabularies.GroupingTypesVocabulary"
+      component=".vocabularies.GroupingTypesVocabularyFactory"
+      />
+
+
+</configure>

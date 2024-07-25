@@ -1,6 +1,6 @@
 [report]
 include =
-    src/rer/volto/search/*
+    src/rer/voltoplugin/search/*
 omit =
     */test*
     */upgrades/*

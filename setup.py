@@ -1,4 +1,4 @@
-"""Installer for the rer.volto.search package."""
+"""Installer for the rer.voltoplugin.search package."""
 
 from setuptools import find_packages
 from setuptools import setup
@@ -14,7 +14,7 @@ long_description = "\n\n".join(
 
 
 setup(
-    name="rer.volto.search",
+    name="rer.voltoplugin.search",
     version="1.0.0.dev0",
     description="Add-on RER for Plone to manage search results in Volto",
     long_description=long_description,
@@ -35,16 +35,16 @@ setup(
     keywords="Python Plone CMS",
     author="RedTurtle Technology",
     author_email="sviluppo@redturtle.it",
-    url="https://github.com/collective/rer.volto.search",
+    url="https://github.com/collective/rer.voltoplugin.search",
     project_urls={
-        "PyPI": "https://pypi.org/project/rer.volto.search/",
-        "Source": "https://github.com/collective/rer.volto.search",
-        "Tracker": "https://github.com/collective/rer.volto.search/issues",
-        # 'Documentation': 'https://rer.volto.search.readthedocs.io/en/latest/',
+        "PyPI": "https://pypi.org/project/rer.voltoplugin.search/",
+        "Source": "https://github.com/collective/rer.voltoplugin.search",
+        "Tracker": "https://github.com/collective/rer.voltoplugin.search/issues",
+        # 'Documentation': 'https://rer.voltoplugin.search.readthedocs.io/en/latest/',
     },
     license="GPL version 2",
     packages=find_packages("src", exclude=["ez_setup"]),
-    namespace_packages=["rer", "rer.volto"],
+    namespace_packages=["rer", "rer.voltoplugin"],
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
@@ -74,6 +74,6 @@ setup(
     [z3c.autoinclude.plugin]
     target = plone
     [console_scripts]
-    update_locale = rer.volto.search.locales.update:update_locale
+    update_locale = rer.voltoplugin.search.locales.update:update_locale
     """,
 )
