@@ -6,11 +6,10 @@ from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
-from rer.voltoplugin.search import _
+from rer.voltoplugin.search.interfaces import IRERSearchMarker
 from rer.voltoplugin.search.restapi.utils import get_facets_data
-from rer.voltoplugin.search.restapi.utils import get_indexes_mapping
 from zope.component import getUtility
-from zope.i18n import translate
+from zope.interface import alsoProvides
 
 
 try:
@@ -45,6 +44,9 @@ class SearchGet(Service):
             return False
 
     def reply(self):
+        # mark request with custom layer to be able to override catalog serializer and add facets
+        alsoProvides(self.request, IRERSearchMarker)
+
         query = deepcopy(self.request.form)
         query = unflatten_dotted_dict(query)
         path_infos = self.get_path_infos(query=query)
@@ -79,17 +81,16 @@ class SearchGet(Service):
 
     def do_solr_search(self, query):
         query["facets"] = True
-        query["facet_fields"] = ["portal_type", "site_name"]
+        query["facet_fields"] = ["site_name"]
 
         if not query.get("site_name", []):
             query["site_name"] = get_site_title()
         elif "all" in query.get("site_name", []):
             del query["site_name"]
 
-        indexes = get_indexes_mapping()
-
-        if indexes:
-            query["facet_fields"].extend(indexes["order"])
+        facets = get_facets_data()
+        for facets_mapping in facets:
+            query["facet_fields"].append(facets_mapping.get("index", ""))
         if "metadata_fields" not in query:
             query["metadata_fields"] = ["Description"]
         else:
@@ -101,61 +102,37 @@ class SearchGet(Service):
         return data
 
     def remap_solr_facets(self, data, query):
-        new_facets = {
-            # "groups": get_types_groups(),
-            "indexes": get_indexes_mapping(),
-            "sites": {"order": [], "values": {}},
-        }
-        for index_id, index_values in data["facets"].items():
-            if index_id == "site_name":
-                entry = new_facets["sites"]["values"]
-                self.handle_sites_facet(
-                    sites=entry,
-                    index_values=index_values,
-                    query=query,
-                )
-                new_facets["sites"]["order"] = sorted(entry.keys())
-            elif index_id == "portal_type":
-                # groups
-                self.handle_groups_facet(
-                    groups=new_facets["groups"]["values"],
-                    index_values=index_values,
-                    query=query,
-                )
+        new_facets = get_facets_data()
+        solr_facets_data = data.get("facets", {})
+        for facet_mapping in new_facets:
+            index_name = facet_mapping.get("index", "")
+            solr_facets = solr_facets_data.get(index_name, {})
+            if not solr_facets:
+                continue
+            if index_name == "portal_type":
+                # remap it into a dictionary
+                solr_facets = {k: v for d in solr_facets for k, v in d.items()}
+                for type_data in facet_mapping.get("items", []):
+                    if type_data.get("id", "") == "all":
+                        # all
+                        type_data["items"] = solr_facets
+                    else:
+                        for type_name in type_data.get("items", {}).keys():
+                            type_data["items"][type_name] = solr_facets.get(
+                                type_name, 0
+                            )
+            elif index_name == "site_name":
+                continue
+
             else:
-                entry = new_facets["indexes"]["values"][index_id]
-                for index_mapping in index_values:
-                    for key, count in index_mapping.items():
-                        if count:
-                            entry["values"][key] = count
+                facet_mapping["items"] = solr_facets
+
+        site_facets = self.handle_sites_facet(data=data, query=query)
+        new_facets.insert(0, site_facets)
+
         return new_facets
 
-    def handle_groups_facet(self, groups, index_values, query):
-        # we need to do a second query in solr, to get the results
-        # unfiltered by types
-        portal_types = query.get("portal_type", "")
-        if portal_types:
-            new_query = deepcopy(query)
-            del new_query["portal_type"]
-            # simplify returned result data
-            new_query["facet_fields"] = ["portal_type"]
-            new_query["metadata_fields"] = ["UID"]
-            new_data = SolrSearchHandler(self.context, self.request).search(new_query)
-            indexes = new_data["facets"]["portal_type"]
-        else:
-            indexes = index_values
-        all_label = translate(
-            _("all_types_label", default="All content types"),
-            context=self.request,
-        )
-        for type_mapping in indexes:
-            for ptype, count in type_mapping.items():
-                for group in groups.values():
-                    if ptype in group["types"]:
-                        group["count"] += count
-                groups[all_label]["count"] += count
-
-    def handle_sites_facet(self, sites, index_values, query):
+    def handle_sites_facet(self, data, query):
         site = query.get("site_name", "")
         if site:
             # we need to do an additional query in solr, to get the results
@@ -168,11 +145,8 @@ class SearchGet(Service):
             new_data = SolrSearchHandler(self.context, self.request).search(new_query)
             indexes = new_data["facets"]["site_name"]
         else:
-            indexes = index_values
-        for site_mapping in indexes:
-            for name, count in site_mapping.items():
-                if count:
-                    sites[name] = count
+            indexes = data["facets"]["site_name"]
+        return indexes
 
     def get_path_infos(self, query):
         if "path" not in query:

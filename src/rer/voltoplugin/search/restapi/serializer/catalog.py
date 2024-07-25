@@ -6,7 +6,7 @@ from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.serializer.catalog import (
     LazyCatalogResultSerializer as BaseSerializer,
 )
-from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchLayer
+from rer.voltoplugin.search.interfaces import IRERSearchMarker
 from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import adapter
 from zope.component import queryMultiAdapter
@@ -17,7 +17,7 @@ import Missing
 
 
 @implementer(ISerializeToJson)
-@adapter(Lazy, IRERVoltopluginSearchLayer)
+@adapter(Lazy, IRERSearchMarker)
 class LazyCatalogResultSerializer(BaseSerializer):
     def __call__(self, fullobjects=False):
         data = super().__call__(fullobjects=fullobjects)

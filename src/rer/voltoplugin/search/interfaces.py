@@ -29,6 +29,12 @@ class IRERVoltopluginSearchCustomFilters(Interface):
         """ """
 
 
+class IRERSearchMarker(Interface):
+    """
+    Marker interface
+    """
+
+
 class IRERVoltopluginSearchSettings(model.Schema):
     """ """
 
