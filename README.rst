@@ -30,9 +30,9 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
    This text does not appear on pypi or github. It is a comment.
 
-================
+======================
 RER Voltoplugin Search
-================
+======================
 
 Add-on for manage Search results in Volto.
 
@@ -46,19 +46,19 @@ Vocabularies
 ============
 
 rer.voltoplugin.search.vocabularies.AdvancedFiltersVocabulary
--------------------------------------------------------
+-------------------------------------------------------------
 
 Vocabulary that returns the list of registered adapters for custom filters based on content-types.
 
 
 rer.voltoplugin.search.vocabularies.IndexesVocabulary
------------------------------------------------
+-----------------------------------------------------
 
 Vocabulary that returns the list of available indexes in portal_catalog.
 
 
 rer.voltoplugin.search.vocabularies.GroupingTypesVocabulary
------------------------------------------------------
+-----------------------------------------------------------
 
 Vocabulary that returns the list of available portal_types.
 

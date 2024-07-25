@@ -1,4 +1,6 @@
-from rer.voltoplugin.search.interfaces import ICollectiveVoltoSitesettingsAdditionalSiteSchema
+from rer.voltoplugin.search.interfaces import (
+    ICollectiveVoltoSitesettingsAdditionalSiteSchema,
+)
 
 
 try:
