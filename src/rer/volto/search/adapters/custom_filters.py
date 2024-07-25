@@ -1,5 +1,5 @@
 from rer.volto.search import _
-from rer.volto.search.interfaces import IRERSearchCustomFilters
+from rer.volto.search.interfaces import IRERVoltoSearchCustomFilters
 from zope.component import adapter
 from zope.i18n import translate
 from zope.interface import implementer
@@ -7,7 +7,7 @@ from zope.interface import Interface
 
 
 @adapter(Interface, Interface)
-@implementer(IRERSearchCustomFilters)
+@implementer(IRERVoltoSearchCustomFilters)
 class EventsAdapter:
     """ """
 

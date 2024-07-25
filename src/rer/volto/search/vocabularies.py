@@ -27,8 +27,7 @@ class IndexesVocabulary:
     """
 
     def __call__(self, context):
-        site = getSite()
-        pc = api.portal.get_tool(site, "portal_catalog")
+        pc = api.portal.get_tool(name="portal_catalog")
         indexes = list(pc.indexes())
         indexes.sort()
         indexes = [SimpleTerm(i, i, i) for i in indexes]
