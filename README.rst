@@ -42,6 +42,88 @@ Features
 - Control panel in plone registry to manage Search settings.
 - Restapi endpoint that exposes these settings for Volto.
 
+If `rer.solrpush`__ is installed and active, the search will be done through SOLR and not Plone catalog.
+
+In results facets there will be also a **site_name**** additional data.
+
+__ https://github.com/RegioneER/rer.solrpush
+
+
+@rer-search endpoint
+====================
+
+This endpoint is similar to the original *@search* one but add an additional information about facets based on this package's settings and results.
+
+facets is a list of filters that can be used to refine the search, and can be configured in the controlpanel.
+
+The first one is always **portal_type**, followed by the indexes selected in controlpanel.
+
+If the selected group has some advanced filters, these additional indexes will be appended at the end of this list.
+
+
+Advanced filters for groups
+===========================
+
+In each group types you can select an advanced filter.
+
+Advanced filters are a list of preset filters that allow to add some extra filters when that group is selected in search.
+
+By default there is only one advanced filter called "Events" that add start and end date filters, but you can add more
+presets in your custom package.
+
+Register new advanced filters
+-----------------------------
+
+Advanced filters are a list of named adapters, so you can add more and override existing ones if needed.
+
+You just need to register a new named adapter::
+
+    <adapter
+      factory = ".my_filters.MyNewFilters"
+      name= "my-filters"
+    />
+
+The adapter should have a `label` attribute (needed to show a human-readable name in sitesearch-settings view) and 
+return the schema for the additional indexes::
+
+    from zope.component import adapter
+    from zope.interface import implementer
+    from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
+    from zope.interface import Interface
+    from my.package import _
+    from zope.i18n import translate
+
+
+    @adapter(Interface, Interface)
+    @implementer(IRERVoltopluginSearchCustomFilters)
+    class MyNewFilters(object):
+    """
+    """
+
+    label = _("some_labelid", default=u"Additional filters")
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self):
+        return [
+            {
+                "index": "start",
+                "items": {},
+                "label": {"it": "Inizio", "en": "Start"},
+                "type": "DateIndex",
+            },
+            {
+                "index": "end",
+                "items": {},
+                "label": {"it": "Fine", "en": "End"},
+                "type": "DateIndex",
+            },
+        ]
+
+Where `start` and `end` are Plone's catalog indexes.
+
 Vocabularies
 ============
 
