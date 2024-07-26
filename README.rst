@@ -60,6 +60,74 @@ The first one is always **portal_type**, followed by the indexes selected in con
 
 If the selected group has some advanced filters, these additional indexes will be appended at the end of this list.
 
+Example of @rer-search response::
+
+    {
+        "@id": "http://localhost:8080/Plone/@rer-search",
+        "items": [
+            ...
+        ],
+        "items_count": 4,
+        "facets": [
+            {
+                "index": "portal_type",
+                "items": [
+                    {
+                        "id": "all",
+                        "index": "portal_type",
+                        "items": {
+                            "Document": 1,
+                            "Event": 1,
+                            "Folder": 1,
+                            "News Item": 1,
+                        },
+                        "label": {"en": "All content types"},
+                    },
+                    {
+                        "icon": "",
+                        "id": "documents",
+                        "items": {"Document": 1},
+                        "label": {"en": "Documents", "it": "Pagine"},
+                    },
+                    {
+                        "icon": "",
+                        "id": "news",
+                        "items": {"ExternalNews": 0, "News Item": 1},
+                        "label": {"en": "News", "it": "Notizie"},
+                    },
+                    {
+                        "icon": "",
+                        "id": "announcements",
+                        "items": {"Bando": 0},
+                        "label": {"en": "Announcements", "it": "Bandi"},
+                    },
+                    {
+                        "icon": "",
+                        "id": "files-and-images",
+                        "items": {"File": 0, "Image": 0},
+                        "label": {
+                            "en": "Files and images",
+                            "it": "File e immagini",
+                        },
+                    },
+                    {
+                        "icon": "",
+                        "id": "events",
+                        "items": {"Event": 1},
+                        "label": {"en": "Events", "it": "Eventi"},
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+            {
+                "index": "Subject",
+                "items": {"aaa": 3, "bbb": 2},
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
+        ]
+    }
 
 Advanced filters for groups
 ===========================
