@@ -106,6 +106,9 @@ class SearchGet(Service):
         solr_facets_data = data.get("facets", {})
         for facet_mapping in new_facets:
             index_name = facet_mapping.get("index", "")
+            if facet_mapping.get("type", "") == "DateIndex":
+                # skip it, we need to set some dates in the interface
+                continue
             solr_facets = solr_facets_data.get(index_name, {})
             if not solr_facets:
                 continue

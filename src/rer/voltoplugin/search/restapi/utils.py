@@ -1,9 +1,14 @@
 from plone import api
 from plone.i18n.normalizer import idnormalizer
 from plone.registry.interfaces import IRegistry
+from plone.restapi.search.utils import unflatten_dotted_dict
 from rer.voltoplugin.search import _
+from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
+from zope.component import ComponentLookupError
+from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.globalrequest import getRequest
 
 import json
 import logging
@@ -25,6 +30,8 @@ def get_value_from_registry(field):
 
 
 def get_facets_data():
+    request = getRequest()
+    query = unflatten_dotted_dict(request)
     facets = []
     pc = api.portal.get_tool(name="portal_catalog")
     # first of all: portal_type
@@ -55,6 +62,15 @@ def get_facets_data():
                 "items": {},
             }
         )
+
+    # at least, append advanced_filters, if set and remove unused data
+    group = query.get("group", "")
+    for group_data in facets[0]["items"]:
+        advanced_filters = group_data.get("advanced_filters", {})
+        if group and group_data.get("id") == group and advanced_filters:
+            facets.extend(advanced_filters)
+        if "advanced_filters" in group_data:
+            del group_data["advanced_filters"]
     return facets
 
 
@@ -82,9 +98,27 @@ def get_types_group_mapping():
             {
                 "label": types_group.get("label", {}),
                 "items": {x: 0 for x in types_group.get("portal_type", [])},
-                "advanced_filters": types_group.get("advanced_filters", ""),
+                "advanced_filters": expand_advanced_filters(
+                    name=types_group.get("advanced_filters", "")
+                ),
                 "icon": types_group.get("icon", ""),
                 "id": group_id,
             }
         )
     return res
+
+
+def expand_advanced_filters(name):
+    if not name:
+        return {}
+    request = getRequest()
+    portal = api.portal.get()
+    try:
+        filters_adapter = getMultiAdapter(
+            (portal, request),
+            IRERVoltopluginSearchCustomFilters,
+            name=name,
+        )
+        return filters_adapter()
+    except ComponentLookupError:
+        return {}

@@ -89,6 +89,7 @@ class IRERVoltopluginSearchSettings(model.Schema):
                 {
                     "label": {"it": "Eventi", "en": "Events"},
                     "portal_type": ["Event"],
+                    "advanced_filters": "events",
                 },
             ]
         ),

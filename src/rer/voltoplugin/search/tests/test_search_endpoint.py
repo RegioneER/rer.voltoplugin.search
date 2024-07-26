@@ -92,28 +92,24 @@ class SearchTest(unittest.TestCase):
                             "label": {"en": "All content types"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "documents",
                             "items": {"Document": 1},
                             "label": {"en": "Documents", "it": "Pagine"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "news",
                             "items": {"ExternalNews": 0, "News Item": 1},
                             "label": {"en": "News", "it": "Notizie"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "announcements",
                             "items": {"Bando": 0},
                             "label": {"en": "Announcements", "it": "Bandi"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "files-and-images",
                             "items": {"File": 0, "Image": 0},
@@ -123,7 +119,6 @@ class SearchTest(unittest.TestCase):
                             },
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "events",
                             "items": {"Event": 1},
@@ -140,6 +135,21 @@ class SearchTest(unittest.TestCase):
                     "type": "KeywordIndex",
                 },
             ],
+        )
+
+    def test_events_have_advanced_filters(self):
+        query = {"SearchableText": "foo"}
+        response = self.api_session.get(self.url, params=query)
+        data = response.json()
+        events_facets = data["facets"][0]["items"][-1]
+        self.assertEqual(
+            events_facets,
+            {
+                "icon": "",
+                "id": "events",
+                "items": {"Event": 1},
+                "label": {"en": "Events", "it": "Eventi"},
+            },
         )
 
     def test_filter_by_group_name_all_return_all_data(self):
@@ -174,28 +184,24 @@ class SearchTest(unittest.TestCase):
                             "label": {"en": "All content types"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "documents",
                             "items": {"Document": 1},
                             "label": {"en": "Documents", "it": "Pagine"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "news",
                             "items": {"ExternalNews": 0, "News Item": 1},
                             "label": {"en": "News", "it": "Notizie"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "announcements",
                             "items": {"Bando": 0},
                             "label": {"en": "Announcements", "it": "Bandi"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "files-and-images",
                             "items": {"File": 0, "Image": 0},
@@ -205,7 +211,6 @@ class SearchTest(unittest.TestCase):
                             },
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "events",
                             "items": {"Event": 1},
@@ -231,6 +236,7 @@ class SearchTest(unittest.TestCase):
 
         self.assertEqual(data["items_total"], 1)
         self.assertEqual(data["items"][0]["@type"], "News Item")
+
         self.assertEqual(
             data["facets"],
             [
@@ -249,28 +255,24 @@ class SearchTest(unittest.TestCase):
                             "label": {"en": "All content types"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "documents",
                             "items": {"Document": 1},
                             "label": {"en": "Documents", "it": "Pagine"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "news",
                             "items": {"ExternalNews": 0, "News Item": 1},
                             "label": {"en": "News", "it": "Notizie"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "announcements",
                             "items": {"Bando": 0},
                             "label": {"en": "Announcements", "it": "Bandi"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "files-and-images",
                             "items": {"File": 0, "Image": 0},
@@ -280,7 +282,6 @@ class SearchTest(unittest.TestCase):
                             },
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "events",
                             "items": {"Event": 1},
@@ -324,28 +325,24 @@ class SearchTest(unittest.TestCase):
                             "label": {"en": "All content types"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "documents",
                             "items": {"Document": 1},
                             "label": {"en": "Documents", "it": "Pagine"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "news",
                             "items": {"ExternalNews": 0, "News Item": 1},
                             "label": {"en": "News", "it": "Notizie"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "announcements",
                             "items": {"Bando": 0},
                             "label": {"en": "Announcements", "it": "Bandi"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "files-and-images",
                             "items": {"File": 0, "Image": 0},
@@ -355,7 +352,6 @@ class SearchTest(unittest.TestCase):
                             },
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "events",
                             "items": {"Event": 1},
@@ -401,28 +397,24 @@ class SearchTest(unittest.TestCase):
                             "label": {"en": "All content types"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "documents",
                             "items": {"Document": 0},
                             "label": {"en": "Documents", "it": "Pagine"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "news",
                             "items": {"ExternalNews": 0, "News Item": 1},
                             "label": {"en": "News", "it": "Notizie"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "announcements",
                             "items": {"Bando": 0},
                             "label": {"en": "Announcements", "it": "Bandi"},
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "files-and-images",
                             "items": {"File": 0, "Image": 0},
@@ -432,7 +424,6 @@ class SearchTest(unittest.TestCase):
                             },
                         },
                         {
-                            "advanced_filters": "",
                             "icon": "",
                             "id": "events",
                             "items": {"Event": 1},
@@ -447,6 +438,93 @@ class SearchTest(unittest.TestCase):
                     "items": {"aaa": 1, "bbb": 2},
                     "label": {"en": "Keywords", "it": "Parole chiave"},
                     "type": "KeywordIndex",
+                },
+            ],
+        )
+
+    def test_filter_by_group_with_advanced_filters_add_new_facets(self):
+        query = {"SearchableText": "foo", "group": "news"}
+        response = self.api_session.get(self.url, params=query)
+        data = response.json()
+
+        self.assertEqual(len(data["facets"]), 2)
+
+        query["group"] = "events"
+        response = self.api_session.get(self.url, params=query)
+        data = response.json()
+        self.assertEqual(len(data["facets"]), 4)
+
+        self.assertEqual(
+            data["facets"],
+            [
+                {
+                    "index": "portal_type",
+                    "items": [
+                        {
+                            "id": "all",
+                            "index": "portal_type",
+                            "items": {
+                                "Document": 1,
+                                "Event": 1,
+                                "Folder": 1,
+                                "News Item": 1,
+                            },
+                            "label": {"en": "All content types"},
+                        },
+                        {
+                            "icon": "",
+                            "id": "documents",
+                            "items": {"Document": 1},
+                            "label": {"en": "Documents", "it": "Pagine"},
+                        },
+                        {
+                            "icon": "",
+                            "id": "news",
+                            "items": {"ExternalNews": 0, "News Item": 1},
+                            "label": {"en": "News", "it": "Notizie"},
+                        },
+                        {
+                            "icon": "",
+                            "id": "announcements",
+                            "items": {"Bando": 0},
+                            "label": {"en": "Announcements", "it": "Bandi"},
+                        },
+                        {
+                            "icon": "",
+                            "id": "files-and-images",
+                            "items": {"File": 0, "Image": 0},
+                            "label": {
+                                "en": "Files and images",
+                                "it": "File e immagini",
+                            },
+                        },
+                        {
+                            "icon": "",
+                            "id": "events",
+                            "items": {"Event": 1},
+                            "label": {"en": "Events", "it": "Eventi"},
+                        },
+                    ],
+                    "label": {"en": "What"},
+                    "type": "Groups",
+                },
+                {
+                    "index": "Subject",
+                    "items": {"bbb": 1},
+                    "label": {"en": "Keywords", "it": "Parole chiave"},
+                    "type": "KeywordIndex",
+                },
+                {
+                    "index": "start",
+                    "items": {},
+                    "label": {"en": "Start date"},
+                    "type": "DateIndex",
+                },
+                {
+                    "index": "end",
+                    "items": {},
+                    "label": {"en": "Start date"},
+                    "type": "DateIndex",
                 },
             ],
         )
