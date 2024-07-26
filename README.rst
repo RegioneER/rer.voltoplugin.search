@@ -44,7 +44,7 @@ Features
 
 If `rer.solrpush`__ is installed and active, the search will be done through SOLR and not Plone catalog.
 
-In results facets there will be also a **site_name**** additional data.
+In results facets there will be also a **site_name** additional data.
 
 __ https://github.com/RegioneER/rer.solrpush
 
@@ -257,3 +257,25 @@ License
 =======
 
 The project is licensed under the GPLv2.
+
+Credits
+=======
+
+Developed with the support of
+
+.. image:: http://www.regione.emilia-romagna.it/rer.gif
+   :alt: Regione Emilia-Romagna
+   :target: http://www.regione.emilia-romagna.it/
+
+Regione Emilia Romagna supports the `PloneGov initiative`__.
+
+__ http://www.plonegov.it/
+
+Authors
+=======
+
+This product was developed by RedTurtle Technology team.
+
+.. image:: https://avatars1.githubusercontent.com/u/1087171?s=100&v=4
+   :alt: RedTurtle Technology Site
+   :target: http://www.redturtle.net/
