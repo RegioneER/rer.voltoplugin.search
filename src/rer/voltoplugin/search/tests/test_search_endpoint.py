@@ -78,11 +78,10 @@ class SearchTest(unittest.TestCase):
             data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {
                                 "Document": 1,
                                 "Event": 1,
@@ -170,11 +169,10 @@ class SearchTest(unittest.TestCase):
             all_data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {
                                 "Document": 1,
                                 "Event": 1,
@@ -241,11 +239,10 @@ class SearchTest(unittest.TestCase):
             data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {
                                 "Document": 1,
                                 "Event": 1,
@@ -311,11 +308,10 @@ class SearchTest(unittest.TestCase):
             data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {
                                 "Document": 1,
                                 "Event": 1,
@@ -388,11 +384,10 @@ class SearchTest(unittest.TestCase):
             data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {"Event": 1, "News Item": 1},
                             "label": {"en": "All content types"},
                         },
@@ -458,11 +453,10 @@ class SearchTest(unittest.TestCase):
             data["facets"],
             [
                 {
-                    "index": "portal_type",
+                    "index": "group",
                     "items": [
                         {
                             "id": "all",
-                            "index": "portal_type",
                             "items": {
                                 "Document": 1,
                                 "Event": 1,

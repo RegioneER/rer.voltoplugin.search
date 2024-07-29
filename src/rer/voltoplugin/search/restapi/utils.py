@@ -45,7 +45,7 @@ def get_facets_data():
     portal_type_data = {
         "label": what_labels,
         "items": get_types_group_mapping(),
-        "index": "portal_type",
+        "index": "group",
         "type": "Groups",  # custom name needed in frontend
     }
     facets.append(portal_type_data)
@@ -84,7 +84,7 @@ def get_types_group_mapping():
             _("all_types_label", default="All content types"), lang=lang
         )
 
-    res = [{"index": "portal_type", "label": all_labels, "items": {}, "id": "all"}]
+    res = [{"label": all_labels, "items": {}, "id": "all"}]
 
     types_grouping = get_value_from_registry(field="types_grouping")
     if not types_grouping:
