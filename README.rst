@@ -58,7 +58,6 @@ facets is a list of filters that can be used to refine the search, and can be co
 
 The first one is always **portal_type**, followed by the indexes selected in controlpanel.
 
-If the selected group has some advanced filters, these additional indexes will be appended at the end of this list.
 
 Example of @rer-search response::
 
@@ -70,7 +69,7 @@ Example of @rer-search response::
         "items_count": 4,
         "facets": [
             {
-                "index": "portal_type",
+                "index": "group",
                 "items": [
                     {
                         "id": "all",
@@ -84,24 +83,28 @@ Example of @rer-search response::
                         "label": {"en": "All content types"},
                     },
                     {
+                        "advanced_filters": {},
                         "icon": "",
                         "id": "documents",
                         "items": {"Document": 1},
                         "label": {"en": "Documents", "it": "Pagine"},
                     },
                     {
+                        "advanced_filters": {},
                         "icon": "",
                         "id": "news",
                         "items": {"ExternalNews": 0, "News Item": 1},
                         "label": {"en": "News", "it": "Notizie"},
                     },
                     {
+                        "advanced_filters": {},
                         "icon": "",
                         "id": "announcements",
                         "items": {"Bando": 0},
                         "label": {"en": "Announcements", "it": "Bandi"},
                     },
                     {
+                        "advanced_filters": {},
                         "icon": "",
                         "id": "files-and-images",
                         "items": {"File": 0, "Image": 0},
@@ -111,6 +114,15 @@ Example of @rer-search response::
                         },
                     },
                     {
+                         "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
                         "icon": "",
                         "id": "events",
                         "items": {"Event": 1},
@@ -177,20 +189,20 @@ return the schema for the additional indexes::
     def __call__(self):
         return [
             {
-                "index": "start",
+                "index": "xxx",
                 "items": {},
                 "label": {"it": "Inizio", "en": "Start"},
                 "type": "DateIndex",
             },
             {
-                "index": "end",
+                "index": "yyy",
                 "items": {},
                 "label": {"it": "Fine", "en": "End"},
                 "type": "DateIndex",
             },
         ]
 
-Where `start` and `end` are Plone's catalog indexes.
+Where `xxx` and `yyy` are Plone's catalog indexes.
 
 Vocabularies
 ============
