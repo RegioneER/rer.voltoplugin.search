@@ -6,11 +6,12 @@ from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
 from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
+from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERSearchMarker
 from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import getUtility
 from zope.interface import alsoProvides
-from rer.voltoplugin.search import _
+
 
 try:
     from rer.solrpush.interfaces.settings import IRerSolrpushSettings
@@ -144,7 +145,6 @@ class SearchGet(Service):
     def handle_sites_facet(self, data, query):
         site = query.get("site_name", "")
         sites = []
-        indexes = []
         site_title = get_site_title()
 
         if site and site != "all":

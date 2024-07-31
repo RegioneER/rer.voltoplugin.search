@@ -1,7 +1,6 @@
 from plone import api
 from plone.i18n.normalizer import idnormalizer
 from plone.registry.interfaces import IRegistry
-from plone.restapi.search.utils import unflatten_dotted_dict
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
@@ -30,8 +29,6 @@ def get_value_from_registry(field):
 
 
 def get_facets_data():
-    request = getRequest()
-    query = unflatten_dotted_dict(request)
     facets = []
     pc = api.portal.get_tool(name="portal_catalog")
     # first of all: portal_type
@@ -62,15 +59,6 @@ def get_facets_data():
                 "items": {},
             }
         )
-
-    # # at least, append advanced_filters, if set and remove unused data
-    # group = query.get("group", "")
-    # for group_data in facets[0]["items"]:
-    #     advanced_filters = group_data.get("advanced_filters", {})
-    #     if group and group_data.get("id") == group and advanced_filters:
-    #         facets.extend(advanced_filters)
-    #     if "advanced_filters" in group_data:
-    #         del group_data["advanced_filters"]
     return facets
 
 

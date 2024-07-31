@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-04-10 14:23+0000\n"
+"POT-Creation-Date: 2024-07-31 14:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,47 +14,100 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
-#: collective/volto/sitesettings/configure.zcml:22
+#: rer/voltoplugin/search/configure.zcml:24
 msgid "Installs the rer.voltoplugin.search add-on."
 msgstr "Installa rer.voltoplugin.search"
 
-#: collective/volto/sitesettings/configure.zcml:31
+#: rer/voltoplugin/search/interfaces.py:42
+msgid "Maximum number of characters in a single word"
+msgstr "Numero massimo di caratteri in una sincola parola"
+
+#: rer/voltoplugin/search/interfaces.py:53
+msgid "Maximum number of words in search query"
+msgstr "Numero massimo di parole in una query di ricerca"
+
+#: rer/voltoplugin/search/profiles/default/controlpanel.xml
+msgid "RER Search Settings"
+msgstr "Impostazioni RER Search"
+
+#: rer/voltoplugin/search/configure.zcml:24
+msgid "RER: Voltoplugin Search"
+msgstr "RER: Voltoplugin Search"
+
+#: rer/voltoplugin/search/configure.zcml:33
+msgid "RER: Voltoplugin Search (uninstall)"
+msgstr "RER: Voltoplugin Search (uninstall)"
+
+#: rer/voltoplugin/search/configure.zcml:33
 msgid "Uninstalls the rer.voltoplugin.search add-on."
 msgstr "Disinstalla rer.voltoplugin.search"
 
-#: collective/volto/sitesettings/configure.zcml:22
-msgid "rer.voltoplugin.search"
-msgstr "rer.voltoplugin.search"
+#. Default: "All Regione Emilia-Romagna sites."
+#: rer/voltoplugin/search/restapi/services/search/get.py:169
+msgid "all_sites_label"
+msgstr "In tutti i siti della Regione"
 
-#: collective/volto/sitesettings/configure.zcml:31
-msgid "rer.voltoplugin.search (uninstall)"
-msgstr "rer.voltoplugin.search (uninstall)"
+#. Default: "All content types"
+#: rer/voltoplugin/search/restapi/utils.py:72
+msgid "all_types_label"
+msgstr "Tutti i contenuti"
 
-#. Default: "Insert a logo that will be used in the site footer."
-#: collective/volto/sitesettings/interfaces.py:43
-msgid "logo_footer_help"
-msgstr "Inserisci un logo che verrà utilizzato nel footer del sito."
+#. Default: "Select which additional filters to show in the column."
+#: rer/voltoplugin/search/interfaces.py:100
+msgid "available_indexes_help"
+msgstr "Seleziona quali filtri aggiuntivi mostrare in colonna."
 
-#. Default: "Footer logo"
-#: collective/volto/sitesettings/interfaces.py:42
-msgid "logo_footer_label"
-msgstr "Logo nel footer"
+#. Default: "Available indexes"
+#: rer/voltoplugin/search/interfaces.py:99
+msgid "available_indexes_label"
+msgstr "Indici disponibili"
 
-#. Default: "If you want to translate site title for different available language, use this field to set translations. If set, this field overrides the default one."
-#: collective/volto/sitesettings/interfaces.py:23
-msgid "site_localized_help"
-msgstr "Utilizza questo campo se vuoi tradurre il titolo del sito nelle varie lingue disponibili. Se impostato, questo campo ha la priorità sul titolo di default."
+#. Default: "In current website."
+#: rer/voltoplugin/search/restapi/services/search/get.py:173
+msgid "current_site_label"
+msgstr "In questo sito web"
 
-#. Default: "Translated site title"
-#: collective/volto/sitesettings/interfaces.py:22
-msgid "site_localized_label"
-msgstr "Titolo del sito tradotto"
+#. Default: "Events"
+#: rer/voltoplugin/search/adapters/custom_filters.py:16
+msgid "event_adapter_label"
+msgstr "Eventi"
 
-#: collective/volto/sitesettings/interfaces.py:33
-msgid "site_subtitle_help"
-msgstr ""
+#. Default: "End date"
+#: rer/voltoplugin/search/adapters/custom_filters.py:31
+msgid "filter_end_label"
+msgstr "Data di fine"
 
-#. Default: "Site subtitle"
-#: collective/volto/sitesettings/interfaces.py:32
-msgid "site_subtitle_label"
-msgstr "Sottotitolo"
+#. Default: "Start date"
+#: rer/voltoplugin/search/adapters/custom_filters.py:28
+msgid "filter_start_label"
+msgstr "Data di inizio"
+
+#. Default: "Set what is the maximum length of a single search word. Longer words will be omitted from the search."
+#: rer/voltoplugin/search/interfaces.py:43
+msgid "help_max_word_len"
+msgstr "Imposta la lunghezza massina di ogni singola parola ricercata. Le parole più lunghe di questo limite verranno omesse."
+
+#. Default: "Set what is the maximum number of words in the search query. The other words will be omitted from the search."
+#: rer/voltoplugin/search/interfaces.py:54
+msgid "help_max_words"
+msgstr "Imposta il numero massimo di parole da cercare. Le parole in eccesso saranno omesse."
+
+#. Default: "RER Search Settings"
+#: rer/voltoplugin/search/browser/controlpanel.py:8
+msgid "rer_volto_search_settings_controlpanel_label"
+msgstr "Impostazioni RER Search"
+
+#. Default: "If you fill this field, you can group search results by content-types."
+#: rer/voltoplugin/search/interfaces.py:65
+msgid "types_grouping_help"
+msgstr "Compilando questo campo, puoi raggruppare i risultati della ricerca per content-type."
+
+#. Default: "Types grouping"
+#: rer/voltoplugin/search/interfaces.py:64
+msgid "types_grouping_label"
+msgstr "Raggruppamento per tipo"
+
+#. Default: "What"
+#: rer/voltoplugin/search/restapi/utils.py:39
+msgid "what_label"
+msgstr "Cosa"
