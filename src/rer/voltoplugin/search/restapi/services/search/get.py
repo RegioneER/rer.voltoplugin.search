@@ -10,7 +10,7 @@ from rer.voltoplugin.search.interfaces import IRERSearchMarker
 from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import getUtility
 from zope.interface import alsoProvides
-
+from rer.voltoplugin.search import _
 
 try:
     from rer.solrpush.interfaces.settings import IRerSolrpushSettings
@@ -90,10 +90,16 @@ class SearchGet(Service):
 
         facets = get_facets_data()
         for facets_mapping in facets:
-            query["facet_fields"].append(facets_mapping.get("index", ""))
+            index_name = facets_mapping.get("index", "")
+            if index_name == "group":
+                query["facet_fields"].append("portal_type")
+            else:
+                query["facet_fields"].append(index_name)
         if "metadata_fields" not in query:
             query["metadata_fields"] = ["Description"]
         else:
+            if not isinstance(query["metadata_fields"], list):
+                query["metadata_fields"] = [query["metadata_fields"]]
             if "Description" not in query["metadata_fields"]:
                 query["metadata_fields"].append("Description")
         data = SolrSearchHandler(self.context, self.request).search(query)
@@ -137,7 +143,11 @@ class SearchGet(Service):
 
     def handle_sites_facet(self, data, query):
         site = query.get("site_name", "")
-        if site:
+        sites = []
+        indexes = []
+        site_title = get_site_title()
+
+        if site and site != "all":
             # we need to do an additional query in solr, to get the results
             # unfiltered by site_name
             new_query = deepcopy(query)
@@ -146,10 +156,38 @@ class SearchGet(Service):
             new_query["facet_fields"] = ["site_name"]
             new_query["metadata_fields"] = ["UID"]
             new_data = SolrSearchHandler(self.context, self.request).search(new_query)
-            indexes = new_data["facets"]["site_name"]
+            sites = new_data["facets"]["site_name"]
         else:
-            indexes = data["facets"]["site_name"]
-        return indexes
+            sites = data["facets"]["site_name"]
+        site_name_facets = {k: v for d in sites for k, v in d.items()}
+
+        all_labels = {}
+        current_site_labels = {}
+        registry = getUtility(IRegistry)
+        for lang in registry["plone.available_languages"]:
+            all_labels[lang] = api.portal.translate(
+                _("all_sites_label", default="All Regione Emilia-Romagna sites."),
+                lang=lang,
+            )
+            current_site_labels[lang] = api.portal.translate(
+                _("current_site_label", default="In current website."),
+                lang=lang,
+            )
+
+        all_entries = [v for v in site_name_facets.values()]
+
+        all_facets = {"id": "all", "items": sum(all_entries), "label": all_labels}
+        current_site_facets = {
+            "id": site_title,
+            "label": current_site_labels,
+            "items": site_name_facets[site_title],
+        }
+        # now that we have
+        return {
+            "index": "site_name",
+            "items": [all_facets, current_site_facets],
+            "type": "SiteName",
+        }
 
     def get_path_infos(self, query):
         if "path" not in query:

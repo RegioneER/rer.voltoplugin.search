@@ -32,15 +32,10 @@ class EventsAdapter:
             )
         return [
             {
-                "index": "start",
-                "items": {},
-                "label": start_labels,
-                "type": "DateIndex",
-            },
-            {
-                "index": "end",
-                "items": {},
-                "label": start_labels,
-                "type": "DateIndex",
+                "index_start": "start",
+                "index_end": "end",
+                "label_start": start_labels,
+                "label_end": end_labels,
+                "type": "DateRangeIndex",
             },
         ]

@@ -63,14 +63,14 @@ def get_facets_data():
             }
         )
 
-    # at least, append advanced_filters, if set and remove unused data
-    group = query.get("group", "")
-    for group_data in facets[0]["items"]:
-        advanced_filters = group_data.get("advanced_filters", {})
-        if group and group_data.get("id") == group and advanced_filters:
-            facets.extend(advanced_filters)
-        if "advanced_filters" in group_data:
-            del group_data["advanced_filters"]
+    # # at least, append advanced_filters, if set and remove unused data
+    # group = query.get("group", "")
+    # for group_data in facets[0]["items"]:
+    #     advanced_filters = group_data.get("advanced_filters", {})
+    #     if group and group_data.get("id") == group and advanced_filters:
+    #         facets.extend(advanced_filters)
+    #     if "advanced_filters" in group_data:
+    #         del group_data["advanced_filters"]
     return facets
 
 
