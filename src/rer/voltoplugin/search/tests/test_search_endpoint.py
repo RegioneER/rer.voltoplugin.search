@@ -56,7 +56,7 @@ class SearchTest(unittest.TestCase):
     def tearDown(self):
         self.api_session.close()
 
-    def test_if_not_pass_SearchableText_do_not_return_results(self):
+    def test_if_not_pass_any_query_do_not_return_results(self):
         query = {}
         response = self.api_session.get(self.url, params=query)
         data = response.json()

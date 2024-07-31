@@ -52,7 +52,7 @@ class SearchGet(Service):
         query = unflatten_dotted_dict(query)
         path_infos = self.get_path_infos(query=query)
 
-        if not query.get("SearchableText", ""):
+        if not query.keys():
             return {
                 "@id": "http://localhost:8080/Plone/++api++/@rer-search?group=notizie",
                 "facets": [],
