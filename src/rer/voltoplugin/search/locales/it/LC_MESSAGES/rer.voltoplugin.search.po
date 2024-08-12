@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-07-31 14:14+0000\n"
+"POT-Creation-Date: 2024-08-12 10:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,10 +42,10 @@ msgstr "RER: Voltoplugin Search (uninstall)"
 msgid "Uninstalls the rer.voltoplugin.search add-on."
 msgstr "Disinstalla rer.voltoplugin.search"
 
-#. Default: "All Regione Emilia-Romagna sites."
-#: rer/voltoplugin/search/restapi/services/search/get.py:169
+#. Default: "All Regione Emilia-Romagna sites (${count})"
+#: rer/voltoplugin/search/restapi/services/search/get.py:187
 msgid "all_sites_label"
-msgstr "In tutti i siti della Regione"
+msgstr "In tutti i siti della Regione (${count})"
 
 #. Default: "All content types"
 #: rer/voltoplugin/search/restapi/utils.py:72
@@ -62,10 +62,10 @@ msgstr "Seleziona quali filtri aggiuntivi mostrare in colonna."
 msgid "available_indexes_label"
 msgstr "Indici disponibili"
 
-#. Default: "In current website."
-#: rer/voltoplugin/search/restapi/services/search/get.py:173
+#. Default: "In current website (${count})"
+#: rer/voltoplugin/search/restapi/services/search/get.py:195
 msgid "current_site_label"
-msgstr "In questo sito web"
+msgstr "In questo sito web (${count})"
 
 #. Default: "Events"
 #: rer/voltoplugin/search/adapters/custom_filters.py:16

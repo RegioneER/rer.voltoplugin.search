@@ -1,3 +1,4 @@
+from plone.restapi.search.utils import unflatten_dotted_dict
 from plone import api
 from plone.i18n.normalizer import idnormalizer
 from plone.registry.interfaces import IRegistry
@@ -8,6 +9,7 @@ from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
+from copy import deepcopy
 
 import json
 import logging
@@ -85,7 +87,7 @@ def get_types_group_mapping():
         res.append(
             {
                 "label": types_group.get("label", {}),
-                "items": {x: 0 for x in types_group.get("portal_type", [])},
+                "portal_types": types_group.get("portal_type", []),
                 "advanced_filters": expand_advanced_filters(
                     name=types_group.get("advanced_filters", "")
                 ),
@@ -110,3 +112,36 @@ def expand_advanced_filters(name):
         return filters_adapter()
     except ComponentLookupError:
         return {}
+
+
+def filter_query_for_search():
+    """
+    Fix parameters
+    """
+    request = getRequest()
+    query = deepcopy(request.form)
+    query = unflatten_dotted_dict(query)
+    plone_utils = api.portal.get_tool(name="plone_utils")
+    if "group" in query:
+        group_value = query.get("group", "")
+        for mapping in get_facets_data()[0].get("items", []):
+            if mapping.get("id", "") == group_value:
+                portal_types = mapping.get("portal_types", [])
+                if portal_types:
+                    if not isinstance(portal_types, list):
+                        portal_types = [portal_types]
+                    query["portal_type"] = plone_utils.getUserFriendlyTypes(
+                        portal_types
+                    )
+        del query["group"]
+
+    for key, value in query.items():
+        if value in ["false", "False"]:
+            query[key] = False
+        if value in ["true", "True"]:
+            query[key] = True
+
+    for index in ["metadata_fields"]:
+        if index in query:
+            del query[index]
+    return query

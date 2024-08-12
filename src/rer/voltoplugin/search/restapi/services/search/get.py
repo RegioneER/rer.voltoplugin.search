@@ -4,11 +4,11 @@ from plone.api.exc import InvalidParameterError
 from plone.base.interfaces.controlpanel import ISiteSchema
 from plone.registry.interfaces import IRegistry
 from plone.restapi.search.handler import SearchHandler
-from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.services import Service
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERSearchMarker
 from rer.voltoplugin.search.restapi.utils import get_facets_data
+from rer.voltoplugin.search.restapi.utils import filter_query_for_search
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
@@ -48,8 +48,7 @@ class SearchGet(Service):
         # mark request with custom layer to be able to override catalog serializer and add facets
         alsoProvides(self.request, IRERSearchMarker)
 
-        query = deepcopy(self.request.form)
-        query = unflatten_dotted_dict(query)
+        query = filter_query_for_search()
         path_infos = self.get_path_infos(query=query)
 
         if not query.keys():
@@ -60,7 +59,6 @@ class SearchGet(Service):
                 "items_total": 0,
             }
 
-        self.filter_types(query)
         if self.solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
@@ -69,16 +67,6 @@ class SearchGet(Service):
         if path_infos:
             data["path_infos"] = path_infos
         return data
-
-    def filter_types(self, query):
-        if "group" in query:
-            group_value = query.get("group", "")
-            for mapping in get_facets_data()[0].get("items", []):
-                if mapping.get("id", "") == group_value:
-                    if mapping.get("items", {}):
-                        query["portal_type"] = list(mapping["items"].keys())
-            del query["group"]
-        return query
 
     def do_solr_search(self, query):
         query["facets"] = True
@@ -112,30 +100,38 @@ class SearchGet(Service):
         new_facets = get_facets_data()
         solr_facets_data = data.get("facets", {})
         for facet_mapping in new_facets:
-            index_name = facet_mapping.get("index", "")
             if facet_mapping.get("type", "") == "DateIndex":
                 # skip it, we need to set some dates in the interface
                 continue
-            solr_facets = solr_facets_data.get(index_name, {})
-            if not solr_facets:
+            index_name = facet_mapping.get("index", "")
+            if index_name == "group":
+                index_name = "portal_type"
+            index_facets = solr_facets_data.get(index_name, [])
+            # convert it into a dict, to better iterate
+            index_facets = {k: v for d in index_facets for k, v in d.items()}
+
+            if not index_facets:
+                continue
+            if index_name == "site_name":
                 continue
             if index_name == "portal_type":
-                # remap it into a dictionary
-                solr_facets = {k: v for d in solr_facets for k, v in d.items()}
                 for type_data in facet_mapping.get("items", []):
                     if type_data.get("id", "") == "all":
-                        # all
-                        type_data["items"] = solr_facets
+                        counter = sum(v for k, v in index_facets.items())
                     else:
-                        for type_name in type_data.get("items", {}).keys():
-                            type_data["items"][type_name] = solr_facets.get(
-                                type_name, 0
-                            )
-            elif index_name == "site_name":
-                continue
-
+                        portal_types = type_data.get("portal_types", [])
+                        counter = sum(
+                            v for k, v in index_facets.items() if k in portal_types
+                        )
+                    for lang, label in type_data.get("label", {}).items():
+                        type_data["label"][lang] = f"{label} ({counter})"
             else:
-                facet_mapping["items"] = solr_facets
+                facet_mapping["items"] = [
+                    [
+                        {"label": f"{k} ({v})", "value": k}
+                        for k, v in index_facets.items()
+                    ]
+                ]
 
         site_facets = self.handle_sites_facet(data=data, query=query)
         new_facets.insert(0, site_facets)
@@ -159,28 +155,37 @@ class SearchGet(Service):
             sites = new_data["facets"]["site_name"]
         else:
             sites = data["facets"]["site_name"]
-        site_name_facets = {k: v for d in sites for k, v in d.items()}
+
+        # convert it into a dict, to better iterate
+        sites = {k: v for d in sites for k, v in d.items()}
+        all_count = sum(v for k, v in sites.items())
+        current_count = sum(v for k, v in sites.items() if k == site_title)
 
         all_labels = {}
         current_site_labels = {}
         registry = getUtility(IRegistry)
         for lang in registry["plone.available_languages"]:
             all_labels[lang] = api.portal.translate(
-                _("all_sites_label", default="All Regione Emilia-Romagna sites."),
+                _(
+                    "all_sites_label",
+                    default="All Regione Emilia-Romagna sites (${count})",
+                    mapping={"count": all_count},
+                ),
                 lang=lang,
             )
             current_site_labels[lang] = api.portal.translate(
-                _("current_site_label", default="In current website."),
+                _(
+                    "current_site_label",
+                    default="In current website (${count})",
+                    mapping={"count": current_count},
+                ),
                 lang=lang,
             )
 
-        all_entries = [v for v in site_name_facets.values()]
-
-        all_facets = {"id": "all", "items": sum(all_entries), "label": all_labels}
+        all_facets = {"id": "all", "label": all_labels}
         current_site_facets = {
             "id": site_title,
             "label": current_site_labels,
-            "items": site_name_facets[site_title],
         }
         # now that we have
         return {

@@ -74,79 +74,84 @@ class SearchTest(unittest.TestCase):
         query = {"SearchableText": "foo"}
         response = self.api_session.get(self.url, params=query)
         data = response.json()
+
+        self.assertEqual(len(data["facets"]), 2)
+
+        # first one are groups in the order of registry entry
         self.assertEqual(
-            data["facets"],
-            [
-                {
-                    "index": "group",
-                    "items": [
-                        {
-                            "id": "all",
-                            "items": {
-                                "Document": 1,
-                                "Event": 1,
-                                "Folder": 1,
-                                "News Item": 1,
-                            },
-                            "label": {"en": "All content types"},
+            data["facets"][0],
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {"en": "All content types (4)"},
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "documents",
+                        "label": {"en": "Documents (1)", "it": "Pagine (1)"},
+                        "portal_types": ["Document"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "news",
+                        "label": {"en": "News (1)", "it": "Notizie (1)"},
+                        "portal_types": ["News Item", "ExternalNews"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "announcements",
+                        "label": {"en": "Announcements (0)", "it": "Bandi (0)"},
+                        "portal_types": ["Bando"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "files-and-images",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)",
                         },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "documents",
-                            "items": {"Document": 1},
-                            "label": {"en": "Documents", "it": "Pagine"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "news",
-                            "items": {"ExternalNews": 0, "News Item": 1},
-                            "label": {"en": "News", "it": "Notizie"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "announcements",
-                            "items": {"Bando": 0},
-                            "label": {"en": "Announcements", "it": "Bandi"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "files-and-images",
-                            "items": {"File": 0, "Image": 0},
-                            "label": {
-                                "en": "Files and images",
-                                "it": "File e immagini",
-                            },
-                        },
-                        {
-                            "advanced_filters": [
-                                {
-                                    "index_end": "end",
-                                    "index_start": "start",
-                                    "label_end": {"en": "End date"},
-                                    "label_start": {"en": "Start date"},
-                                    "type": "DateRangeIndex",
-                                }
-                            ],
-                            "icon": "",
-                            "id": "events",
-                            "items": {"Event": 1},
-                            "label": {"en": "Events", "it": "Eventi"},
-                        },
-                    ],
-                    "label": {"en": "What"},
-                    "type": "Groups",
-                },
-                {
-                    "index": "Subject",
-                    "items": {"aaa": 3, "bbb": 2},
-                    "label": {"en": "Keywords", "it": "Parole chiave"},
-                    "type": "KeywordIndex",
-                },
-            ],
+                        "portal_types": ["File", "Image"],
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
+                        "icon": "",
+                        "id": "events",
+                        "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                        "portal_types": ["Event"],
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+        )
+
+        # second one are Subjects
+        self.assertEqual(
+            data["facets"][1],
+            {
+                "index": "Subject",
+                "items": [
+                    {"label": "aaa (3)", "value": "aaa"},
+                    {"label": "bbb (2)", "value": "bbb"},
+                ],
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
         )
 
     def test_events_have_advanced_filters(self):
@@ -154,6 +159,7 @@ class SearchTest(unittest.TestCase):
         response = self.api_session.get(self.url, params=query)
         data = response.json()
         events_facets = data["facets"][0]["items"][-1]
+
         self.assertEqual(
             events_facets,
             {
@@ -168,8 +174,8 @@ class SearchTest(unittest.TestCase):
                 ],
                 "icon": "",
                 "id": "events",
-                "items": {"Event": 1},
-                "label": {"en": "Events", "it": "Eventi"},
+                "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                "portal_types": ["Event"],
             },
         )
 
@@ -189,78 +195,78 @@ class SearchTest(unittest.TestCase):
         self.assertEqual(data["items_total"], 4)
 
         self.assertEqual(
-            all_data["facets"],
-            [
-                {
-                    "index": "group",
-                    "items": [
-                        {
-                            "id": "all",
-                            "items": {
-                                "Document": 1,
-                                "Event": 1,
-                                "Folder": 1,
-                                "News Item": 1,
-                            },
-                            "label": {"en": "All content types"},
+            all_data["facets"][0],
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {"en": "All content types (4)"},
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "documents",
+                        "label": {"en": "Documents (1)", "it": "Pagine (1)"},
+                        "portal_types": ["Document"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "news",
+                        "label": {"en": "News (1)", "it": "Notizie (1)"},
+                        "portal_types": ["News Item", "ExternalNews"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "announcements",
+                        "label": {"en": "Announcements (0)", "it": "Bandi (0)"},
+                        "portal_types": ["Bando"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "files-and-images",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)",
                         },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "documents",
-                            "items": {"Document": 1},
-                            "label": {"en": "Documents", "it": "Pagine"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "news",
-                            "items": {"ExternalNews": 0, "News Item": 1},
-                            "label": {"en": "News", "it": "Notizie"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "announcements",
-                            "items": {"Bando": 0},
-                            "label": {"en": "Announcements", "it": "Bandi"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "files-and-images",
-                            "items": {"File": 0, "Image": 0},
-                            "label": {
-                                "en": "Files and images",
-                                "it": "File e immagini",
-                            },
-                        },
-                        {
-                            "advanced_filters": [
-                                {
-                                    "index_end": "end",
-                                    "index_start": "start",
-                                    "label_end": {"en": "End date"},
-                                    "label_start": {"en": "Start date"},
-                                    "type": "DateRangeIndex",
-                                }
-                            ],
-                            "icon": "",
-                            "id": "events",
-                            "items": {"Event": 1},
-                            "label": {"en": "Events", "it": "Eventi"},
-                        },
-                    ],
-                    "label": {"en": "What"},
-                    "type": "Groups",
-                },
-                {
-                    "index": "Subject",
-                    "items": {"aaa": 3, "bbb": 2},
-                    "label": {"en": "Keywords", "it": "Parole chiave"},
-                    "type": "KeywordIndex",
-                },
-            ],
+                        "portal_types": ["File", "Image"],
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
+                        "icon": "",
+                        "id": "events",
+                        "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                        "portal_types": ["Event"],
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+        )
+
+        self.assertEqual(
+            data["facets"][1],
+            {
+                "index": "Subject",
+                "items": [
+                    {"label": "aaa (3)", "value": "aaa"},
+                    {"label": "bbb (2)", "value": "bbb"},
+                ],
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
         )
 
     def test_filter_by_group_name_return_filtered_data(self):
@@ -270,79 +276,80 @@ class SearchTest(unittest.TestCase):
 
         self.assertEqual(data["items_total"], 1)
         self.assertEqual(data["items"][0]["@type"], "News Item")
+
         self.assertEqual(
-            data["facets"],
-            [
-                {
-                    "index": "group",
-                    "items": [
-                        {
-                            "id": "all",
-                            "items": {
-                                "Document": 1,
-                                "Event": 1,
-                                "Folder": 1,
-                                "News Item": 1,
-                            },
-                            "label": {"en": "All content types"},
+            data["facets"][0],
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {"en": "All content types (4)"},
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "documents",
+                        "label": {"en": "Documents (1)", "it": "Pagine (1)"},
+                        "portal_types": ["Document"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "news",
+                        "label": {"en": "News (1)", "it": "Notizie (1)"},
+                        "portal_types": ["News Item", "ExternalNews"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "announcements",
+                        "label": {"en": "Announcements (0)", "it": "Bandi (0)"},
+                        "portal_types": ["Bando"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "files-and-images",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)",
                         },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "documents",
-                            "items": {"Document": 1},
-                            "label": {"en": "Documents", "it": "Pagine"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "news",
-                            "items": {"ExternalNews": 0, "News Item": 1},
-                            "label": {"en": "News", "it": "Notizie"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "announcements",
-                            "items": {"Bando": 0},
-                            "label": {"en": "Announcements", "it": "Bandi"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "files-and-images",
-                            "items": {"File": 0, "Image": 0},
-                            "label": {
-                                "en": "Files and images",
-                                "it": "File e immagini",
-                            },
-                        },
-                        {
-                            "advanced_filters": [
-                                {
-                                    "index_end": "end",
-                                    "index_start": "start",
-                                    "label_end": {"en": "End date"},
-                                    "label_start": {"en": "Start date"},
-                                    "type": "DateRangeIndex",
-                                }
-                            ],
-                            "icon": "",
-                            "id": "events",
-                            "items": {"Event": 1},
-                            "label": {"en": "Events", "it": "Eventi"},
-                        },
-                    ],
-                    "label": {"en": "What"},
-                    "type": "Groups",
-                },
-                {
-                    "index": "Subject",
-                    "items": {"aaa": 1, "bbb": 1},
-                    "label": {"en": "Keywords", "it": "Parole chiave"},
-                    "type": "KeywordIndex",
-                },
-            ],
+                        "portal_types": ["File", "Image"],
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
+                        "icon": "",
+                        "id": "events",
+                        "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                        "portal_types": ["Event"],
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+        )
+
+        self.assertEqual(
+            data["facets"][1],
+            {
+                "index": "Subject",
+                "items": [
+                    {"label": "aaa (1)", "value": "aaa"},
+                    {"label": "bbb (1)", "value": "bbb"},
+                ],
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
         )
 
     def test_filter_by_group_name_do_not_change_types_facet_but_update_other_indexes(
@@ -351,79 +358,80 @@ class SearchTest(unittest.TestCase):
         query = {"SearchableText": "foo", "group": "news"}
         response = self.api_session.get(self.url, params=query)
         data = response.json()
+
         self.assertEqual(
-            data["facets"],
-            [
-                {
-                    "index": "group",
-                    "items": [
-                        {
-                            "id": "all",
-                            "items": {
-                                "Document": 1,
-                                "Event": 1,
-                                "Folder": 1,
-                                "News Item": 1,
-                            },
-                            "label": {"en": "All content types"},
+            data["facets"][0],
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {"en": "All content types (4)"},
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "documents",
+                        "label": {"en": "Documents (1)", "it": "Pagine (1)"},
+                        "portal_types": ["Document"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "news",
+                        "label": {"en": "News (1)", "it": "Notizie (1)"},
+                        "portal_types": ["News Item", "ExternalNews"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "announcements",
+                        "label": {"en": "Announcements (0)", "it": "Bandi (0)"},
+                        "portal_types": ["Bando"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "files-and-images",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)",
                         },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "documents",
-                            "items": {"Document": 1},
-                            "label": {"en": "Documents", "it": "Pagine"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "news",
-                            "items": {"ExternalNews": 0, "News Item": 1},
-                            "label": {"en": "News", "it": "Notizie"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "announcements",
-                            "items": {"Bando": 0},
-                            "label": {"en": "Announcements", "it": "Bandi"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "files-and-images",
-                            "items": {"File": 0, "Image": 0},
-                            "label": {
-                                "en": "Files and images",
-                                "it": "File e immagini",
-                            },
-                        },
-                        {
-                            "advanced_filters": [
-                                {
-                                    "index_end": "end",
-                                    "index_start": "start",
-                                    "label_end": {"en": "End date"},
-                                    "label_start": {"en": "Start date"},
-                                    "type": "DateRangeIndex",
-                                }
-                            ],
-                            "icon": "",
-                            "id": "events",
-                            "items": {"Event": 1},
-                            "label": {"en": "Events", "it": "Eventi"},
-                        },
-                    ],
-                    "label": {"en": "What"},
-                    "type": "Groups",
-                },
-                {
-                    "index": "Subject",
-                    "items": {"aaa": 1, "bbb": 1},
-                    "label": {"en": "Keywords", "it": "Parole chiave"},
-                    "type": "KeywordIndex",
-                },
-            ],
+                        "portal_types": ["File", "Image"],
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
+                        "icon": "",
+                        "id": "events",
+                        "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                        "portal_types": ["Event"],
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+        )
+
+        self.assertEqual(
+            data["facets"][1],
+            {
+                "index": "Subject",
+                "items": [
+                    {"label": "aaa (1)", "value": "aaa"},
+                    {"label": "bbb (1)", "value": "bbb"},
+                ],
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
         )
 
     def test_filter_by_subject_return_filtered_results(self):
@@ -439,72 +447,78 @@ class SearchTest(unittest.TestCase):
         query = {"SearchableText": "foo", "Subject": "bbb"}
         response = self.api_session.get(self.url, params=query)
         data = response.json()
+
         self.assertEqual(
-            data["facets"],
-            [
-                {
-                    "index": "group",
-                    "items": [
-                        {
-                            "id": "all",
-                            "items": {"Event": 1, "News Item": 1},
-                            "label": {"en": "All content types"},
+            data["facets"][0],
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {"en": "All content types (2)"},
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "documents",
+                        "label": {"en": "Documents (0)", "it": "Pagine (0)"},
+                        "portal_types": ["Document"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "news",
+                        "label": {"en": "News (1)", "it": "Notizie (1)"},
+                        "portal_types": ["News Item", "ExternalNews"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "announcements",
+                        "label": {"en": "Announcements (0)", "it": "Bandi (0)"},
+                        "portal_types": ["Bando"],
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "files-and-images",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)",
                         },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "documents",
-                            "items": {"Document": 0},
-                            "label": {"en": "Documents", "it": "Pagine"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "news",
-                            "items": {"ExternalNews": 0, "News Item": 1},
-                            "label": {"en": "News", "it": "Notizie"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "announcements",
-                            "items": {"Bando": 0},
-                            "label": {"en": "Announcements", "it": "Bandi"},
-                        },
-                        {
-                            "advanced_filters": {},
-                            "icon": "",
-                            "id": "files-and-images",
-                            "items": {"File": 0, "Image": 0},
-                            "label": {
-                                "en": "Files and images",
-                                "it": "File e immagini",
-                            },
-                        },
-                        {
-                            "advanced_filters": [
-                                {
-                                    "index_end": "end",
-                                    "index_start": "start",
-                                    "label_end": {"en": "End date"},
-                                    "label_start": {"en": "Start date"},
-                                    "type": "DateRangeIndex",
-                                }
-                            ],
-                            "icon": "",
-                            "id": "events",
-                            "items": {"Event": 1},
-                            "label": {"en": "Events", "it": "Eventi"},
-                        },
-                    ],
-                    "label": {"en": "What"},
-                    "type": "Groups",
-                },
-                {
-                    "index": "Subject",
-                    "items": {"aaa": 1, "bbb": 2},
-                    "label": {"en": "Keywords", "it": "Parole chiave"},
-                    "type": "KeywordIndex",
-                },
-            ],
+                        "portal_types": ["File", "Image"],
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {"en": "End date"},
+                                "label_start": {"en": "Start date"},
+                                "type": "DateRangeIndex",
+                            }
+                        ],
+                        "icon": "",
+                        "id": "events",
+                        "label": {"en": "Events (1)", "it": "Eventi (1)"},
+                        "portal_types": ["Event"],
+                    },
+                ],
+                "label": {"en": "What"},
+                "type": "Groups",
+            },
+        )
+
+        self.assertEqual(
+            data["facets"][1],
+            {
+                "index": "Subject",
+                "items": [
+                    {"label": "aaa (1)", "value": "aaa"},
+                    {"label": "bbb (2)", "value": "bbb"},
+                ],
+                "label": {"en": "Keywords", "it": "Parole chiave"},
+                "type": "KeywordIndex",
+            },
         )

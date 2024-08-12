@@ -62,84 +62,134 @@ The first one is always **portal_type**, followed by the indexes selected in con
 Example of @rer-search response::
 
     {
-        "@id": "http://localhost:8080/Plone/@rer-search",
-        "items": [
-            ...
-        ],
-        "items_count": 4,
-        "facets": [
-            {
-                "index": "group",
-                "items": [
-                    {
-                        "id": "all",
-                        "index": "portal_type",
-                        "items": {
-                            "Document": 1,
-                            "Event": 1,
-                            "Folder": 1,
-                            "News Item": 1,
-                        },
-                        "label": {"en": "All content types"},
+    "@id": "http://localhost:8080/Plone/++api++/@rer-search?SearchableText=foo",
+    "facets": [
+        {
+            "index": "group",
+            "items": [
+                {
+                    "id": "all",
+                    "items": {},
+                    "label": {
+                        "it": "Tutti i contenuti (5)"
+                    }
+                },
+                {
+                    "advanced_filters": {},
+                    "icon": "",
+                    "id": "pagine",
+                    "label": {
+                        "en": "Documents (1)",
+                        "it": "Pagine (1)"
                     },
-                    {
-                        "advanced_filters": {},
-                        "icon": "",
-                        "id": "documents",
-                        "items": {"Document": 1},
-                        "label": {"en": "Documents", "it": "Pagine"},
+                    "portal_types": [
+                        "Document"
+                    ]
+                },
+                {
+                    "advanced_filters": {},
+                    "icon": "",
+                    "id": "notizie",
+                    "label": {
+                        "en": "News (2)",
+                        "it": "Notizie (2)"
                     },
-                    {
-                        "advanced_filters": {},
-                        "icon": "",
-                        "id": "news",
-                        "items": {"ExternalNews": 0, "News Item": 1},
-                        "label": {"en": "News", "it": "Notizie"},
+                    "portal_types": [
+                        "News Item",
+                        "ExternalNews"
+                    ]
+                },
+                {
+                    "advanced_filters": {},
+                    "icon": "",
+                    "id": "bandi",
+                    "label": {
+                        "en": "Announcements (1)",
+                        "it": "Bandi (1)"
                     },
-                    {
-                        "advanced_filters": {},
-                        "icon": "",
-                        "id": "announcements",
-                        "items": {"Bando": 0},
-                        "label": {"en": "Announcements", "it": "Bandi"},
+                    "portal_types": [
+                        "Bando"
+                    ]
+                },
+                {
+                    "advanced_filters": {},
+                    "icon": "",
+                    "id": "file-e-immagini",
+                    "label": {
+                        "en": "Files and images (0)",
+                        "it": "File e immagini (0)"
                     },
-                    {
-                        "advanced_filters": {},
-                        "icon": "",
-                        "id": "files-and-images",
-                        "items": {"File": 0, "Image": 0},
-                        "label": {
-                            "en": "Files and images",
-                            "it": "File e immagini",
-                        },
+                    "portal_types": [
+                        "File",
+                        "Image"
+                    ]
+                },
+                {
+                    "advanced_filters": [
+                        {
+                            "index_end": "end",
+                            "index_start": "start",
+                            "label_end": {
+                                "it": "Data di fine"
+                            },
+                            "label_start": {
+                                "it": "Data di inizio"
+                            },
+                            "type": "DateRangeIndex"
+                        }
+                    ],
+                    "icon": "",
+                    "id": "eventi",
+                    "label": {
+                        "en": "Events (1)",
+                        "it": "Eventi (1)"
                     },
-                    {
-                         "advanced_filters": [
-                            {
-                                "index_end": "end",
-                                "index_start": "start",
-                                "label_end": {"en": "End date"},
-                                "label_start": {"en": "Start date"},
-                                "type": "DateRangeIndex",
-                            }
-                        ],
-                        "icon": "",
-                        "id": "events",
-                        "items": {"Event": 1},
-                        "label": {"en": "Events", "it": "Eventi"},
-                    },
-                ],
-                "label": {"en": "What"},
-                "type": "Groups",
+                    "portal_types": [
+                        "Event"
+                    ]
+                }
+            ],
+            "label": {
+                "it": "Cosa"
             },
-            {
-                "index": "Subject",
-                "items": {"aaa": 3, "bbb": 2},
-                "label": {"en": "Keywords", "it": "Parole chiave"},
-                "type": "KeywordIndex",
+            "type": "Groups"
+        },
+        {
+            "index": "Subject",
+            "items": [
+                {
+                    "label": "aaa (2)",
+                    "value": "aaa"
+                },
+                {
+                    "label": "bbb (1)",
+                    "value": "bbb"
+                }
+            ],
+            "label": {
+                "en": "Keywords",
+                "it": "Parole chiave"
             },
-        ]
-    }
+            "type": "KeywordIndex"
+        }
+    ],
+    "items": [
+        {
+            "@id": "http://localhost:8080/Plone/xxx",
+            "@type": "Document",
+            "UID": "33fe109d445d4e1db4b46afae8301950",
+            "description": "",
+            "id": "xxx",
+            "image_field": "",
+            "image_scales": null,
+            "review_state": "published",
+            "title": "Pagina foo",
+            "type_title": "Pagina"
+        },
+        ...
+    ],
+    "items_total": 5
+}
 
 Advanced filters for groups
 ===========================
