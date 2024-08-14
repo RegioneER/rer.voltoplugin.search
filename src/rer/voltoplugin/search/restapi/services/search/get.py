@@ -74,7 +74,7 @@ class SearchGet(Service):
 
         if not query.get("site_name", []):
             query["site_name"] = get_site_title()
-        elif "all" in query.get("site_name", []):
+        elif "all_sites" in query.get("site_name", []):
             del query["site_name"]
 
         facets = get_facets_data()
@@ -127,10 +127,7 @@ class SearchGet(Service):
                         type_data["label"][lang] = f"{label} ({counter})"
             else:
                 facet_mapping["items"] = [
-                    [
-                        {"label": f"{k} ({v})", "value": k}
-                        for k, v in index_facets.items()
-                    ]
+                    {"label": f"{k} ({v})", "value": k} for k, v in index_facets.items()
                 ]
 
         site_facets = self.handle_sites_facet(data=data, query=query)
@@ -161,6 +158,7 @@ class SearchGet(Service):
         all_count = sum(v for k, v in sites.items())
         current_count = sum(v for k, v in sites.items() if k == site_title)
 
+        labels = {}
         all_labels = {}
         current_site_labels = {}
         registry = getUtility(IRegistry)
@@ -181,8 +179,11 @@ class SearchGet(Service):
                 ),
                 lang=lang,
             )
+            labels[lang] = api.portal.translate(
+                _("where_label", default="Where"), lang=lang
+            )
 
-        all_facets = {"id": "all", "label": all_labels}
+        all_facets = {"id": "all_sites", "label": all_labels}
         current_site_facets = {
             "id": site_title,
             "label": current_site_labels,
@@ -192,6 +193,7 @@ class SearchGet(Service):
             "index": "site_name",
             "items": [all_facets, current_site_facets],
             "type": "SiteName",
+            "label": labels,
         }
 
     def get_path_infos(self, query):

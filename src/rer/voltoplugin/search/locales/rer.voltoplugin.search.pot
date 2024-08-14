@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-08-12 10:07+0000\n"
+"POT-Creation-Date: 2024-08-14 09:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,12 +46,12 @@ msgid "Uninstalls the rer.voltoplugin.search add-on."
 msgstr ""
 
 #. Default: "All Regione Emilia-Romagna sites (${count})"
-#: rer/voltoplugin/search/restapi/services/search/get.py:187
+#: rer/voltoplugin/search/restapi/services/search/get.py:169
 msgid "all_sites_label"
 msgstr ""
 
 #. Default: "All content types"
-#: rer/voltoplugin/search/restapi/utils.py:72
+#: rer/voltoplugin/search/restapi/utils.py:76
 msgid "all_types_label"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "available_indexes_label"
 msgstr ""
 
 #. Default: "In current website (${count})"
-#: rer/voltoplugin/search/restapi/services/search/get.py:195
+#: rer/voltoplugin/search/restapi/services/search/get.py:177
 msgid "current_site_label"
 msgstr ""
 
@@ -76,12 +76,17 @@ msgid "event_adapter_label"
 msgstr ""
 
 #. Default: "End date"
-#: rer/voltoplugin/search/adapters/custom_filters.py:31
+#: rer/voltoplugin/search/adapters/custom_filters.py:32
 msgid "filter_end_label"
 msgstr ""
 
+#. Default: "Event date"
+#: rer/voltoplugin/search/adapters/custom_filters.py:35
+msgid "filter_event_dates_label"
+msgstr ""
+
 #. Default: "Start date"
-#: rer/voltoplugin/search/adapters/custom_filters.py:28
+#: rer/voltoplugin/search/adapters/custom_filters.py:29
 msgid "filter_start_label"
 msgstr ""
 
@@ -111,6 +116,6 @@ msgid "types_grouping_label"
 msgstr ""
 
 #. Default: "What"
-#: rer/voltoplugin/search/restapi/utils.py:39
+#: rer/voltoplugin/search/restapi/utils.py:43
 msgid "what_label"
 msgstr ""

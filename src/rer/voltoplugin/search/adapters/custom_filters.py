@@ -23,6 +23,7 @@ class EventsAdapter:
         registry = getUtility(IRegistry)
         start_labels = {}
         end_labels = {}
+        labels = {}
         for lang in registry["plone.available_languages"]:
             start_labels[lang] = api.portal.translate(
                 _("filter_start_label", default="Start date"), lang=lang
@@ -30,10 +31,14 @@ class EventsAdapter:
             end_labels[lang] = api.portal.translate(
                 _("filter_end_label", default="End date"), lang=lang
             )
+            labels[lang] = api.portal.translate(
+                _("filter_event_dates_label", default="Event date"), lang=lang
+            )
         return [
             {
                 "index_start": "start",
                 "index_end": "end",
+                "label": labels,
                 "label_start": start_labels,
                 "label_end": end_labels,
                 "type": "DateRangeIndex",

@@ -10,6 +10,8 @@ from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
 from copy import deepcopy
+from Products.DateRecurringIndex.index import DateRecurringIndex
+from DateTime import DateTime
 
 import json
 import logging
@@ -110,7 +112,8 @@ def expand_advanced_filters(name):
             name=name,
         )
         return filters_adapter()
-    except ComponentLookupError:
+    except ComponentLookupError as e:
+        logger.exception(e)
         return {}
 
 
@@ -122,6 +125,8 @@ def filter_query_for_search():
     query = deepcopy(request.form)
     query = unflatten_dotted_dict(query)
     plone_utils = api.portal.get_tool(name="plone_utils")
+    pc = api.portal.get_tool(name="portal_catalog")
+
     if "group" in query:
         group_value = query.get("group", "")
         for mapping in get_facets_data()[0].get("items", []):
@@ -140,6 +145,13 @@ def filter_query_for_search():
             query[key] = False
         if value in ["true", "True"]:
             query[key] = True
+
+        if isinstance(pc.Indexes.get(key, None), DateRecurringIndex):
+            # convert strings into a DateTime object
+            if isinstance(value.get("query", ""), list):
+                query[key]["query"] = [DateTime(x) for x in value["query"]]
+            else:
+                query[key]["query"] = DateTime(value["query"])
 
     for index in ["metadata_fields"]:
         if index in query:
