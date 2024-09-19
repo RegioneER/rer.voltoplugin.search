@@ -1,18 +1,16 @@
-from copy import deepcopy
 from plone import api
 from plone.indexer.interfaces import IIndexableObject
 from plone.restapi.interfaces import ISerializeToJson
-from plone.restapi.search.utils import unflatten_dotted_dict
 from plone.restapi.serializer.catalog import (
     LazyCatalogResultSerializer as BaseSerializer,
 )
 from rer.voltoplugin.search.interfaces import IRERSearchMarker
+from rer.voltoplugin.search.restapi.utils import filter_query_for_search
 from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import adapter
 from zope.component import queryMultiAdapter
 from zope.interface import implementer
 from ZTUtils.Lazy import Lazy
-from rer.voltoplugin.search.restapi.utils import filter_query_for_search
 
 import Missing
 
@@ -118,7 +116,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
         portal_catalog = api.portal.get_tool(name="portal_catalog")
         brains_to_iterate = portal_catalog(**query)
 
-        # count occurences
+        # count occurrences
         counters = {"all": 0}
         for brain in brains_to_iterate:
             for type_data in facet.get("items", []):

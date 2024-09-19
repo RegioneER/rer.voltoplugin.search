@@ -1,7 +1,10 @@
-from plone.restapi.search.utils import unflatten_dotted_dict
+from copy import deepcopy
+from DateTime import DateTime
 from plone import api
 from plone.i18n.normalizer import idnormalizer
 from plone.registry.interfaces import IRegistry
+from plone.restapi.search.utils import unflatten_dotted_dict
+from Products.DateRecurringIndex.index import DateRecurringIndex
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
@@ -9,9 +12,6 @@ from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
-from copy import deepcopy
-from Products.DateRecurringIndex.index import DateRecurringIndex
-from DateTime import DateTime
 
 import json
 import logging

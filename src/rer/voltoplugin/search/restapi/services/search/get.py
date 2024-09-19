@@ -7,8 +7,8 @@ from plone.restapi.search.handler import SearchHandler
 from plone.restapi.services import Service
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERSearchMarker
-from rer.voltoplugin.search.restapi.utils import get_facets_data
 from rer.voltoplugin.search.restapi.utils import filter_query_for_search
+from rer.voltoplugin.search.restapi.utils import get_facets_data
 from zope.component import getUtility
 from zope.interface import alsoProvides
 
