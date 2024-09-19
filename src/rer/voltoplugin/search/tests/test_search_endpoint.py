@@ -124,6 +124,7 @@ class SearchTest(unittest.TestCase):
                             {
                                 "index_end": "end",
                                 "index_start": "start",
+                                "label": {"en": "Event date"},
                                 "label_end": {"en": "End date"},
                                 "label_start": {"en": "Start date"},
                                 "type": "DateRangeIndex",
@@ -159,7 +160,6 @@ class SearchTest(unittest.TestCase):
         response = self.api_session.get(self.url, params=query)
         data = response.json()
         events_facets = data["facets"][0]["items"][-1]
-
         self.assertEqual(
             events_facets,
             {
@@ -167,6 +167,7 @@ class SearchTest(unittest.TestCase):
                     {
                         "index_end": "end",
                         "index_start": "start",
+                        "label": {"en": "Event date"},
                         "label_end": {"en": "End date"},
                         "label_start": {"en": "Start date"},
                         "type": "DateRangeIndex",
@@ -240,6 +241,7 @@ class SearchTest(unittest.TestCase):
                             {
                                 "index_end": "end",
                                 "index_start": "start",
+                                "label": {"en": "Event date"},
                                 "label_end": {"en": "End date"},
                                 "label_start": {"en": "Start date"},
                                 "type": "DateRangeIndex",
@@ -323,6 +325,7 @@ class SearchTest(unittest.TestCase):
                             {
                                 "index_end": "end",
                                 "index_start": "start",
+                                "label": {"en": "Event date"},
                                 "label_end": {"en": "End date"},
                                 "label_start": {"en": "Start date"},
                                 "type": "DateRangeIndex",
@@ -405,6 +408,7 @@ class SearchTest(unittest.TestCase):
                             {
                                 "index_end": "end",
                                 "index_start": "start",
+                                "label": {"en": "Event date"},
                                 "label_end": {"en": "End date"},
                                 "label_start": {"en": "Start date"},
                                 "type": "DateRangeIndex",
@@ -494,6 +498,7 @@ class SearchTest(unittest.TestCase):
                             {
                                 "index_end": "end",
                                 "index_start": "start",
+                                "label": {"en": "Event date"},
                                 "label_end": {"en": "End date"},
                                 "label_start": {"en": "Start date"},
                                 "type": "DateRangeIndex",
