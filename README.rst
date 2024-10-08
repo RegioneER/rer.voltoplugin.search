@@ -62,134 +62,134 @@ The first one is always **portal_type**, followed by the indexes selected in con
 Example of @rer-search response::
 
     {
-    "@id": "http://localhost:8080/Plone/++api++/@rer-search?SearchableText=foo",
-    "facets": [
-        {
-            "index": "group",
-            "items": [
-                {
-                    "id": "all",
-                    "items": {},
-                    "label": {
-                        "it": "Tutti i contenuti (5)"
-                    }
-                },
-                {
-                    "advanced_filters": {},
-                    "icon": "",
-                    "id": "pagine",
-                    "label": {
-                        "en": "Documents (1)",
-                        "it": "Pagine (1)"
-                    },
-                    "portal_types": [
-                        "Document"
-                    ]
-                },
-                {
-                    "advanced_filters": {},
-                    "icon": "",
-                    "id": "notizie",
-                    "label": {
-                        "en": "News (2)",
-                        "it": "Notizie (2)"
-                    },
-                    "portal_types": [
-                        "News Item",
-                        "ExternalNews"
-                    ]
-                },
-                {
-                    "advanced_filters": {},
-                    "icon": "",
-                    "id": "bandi",
-                    "label": {
-                        "en": "Announcements (1)",
-                        "it": "Bandi (1)"
-                    },
-                    "portal_types": [
-                        "Bando"
-                    ]
-                },
-                {
-                    "advanced_filters": {},
-                    "icon": "",
-                    "id": "file-e-immagini",
-                    "label": {
-                        "en": "Files and images (0)",
-                        "it": "File e immagini (0)"
-                    },
-                    "portal_types": [
-                        "File",
-                        "Image"
-                    ]
-                },
-                {
-                    "advanced_filters": [
-                        {
-                            "index_end": "end",
-                            "index_start": "start",
-                            "label_end": {
-                                "it": "Data di fine"
-                            },
-                            "label_start": {
-                                "it": "Data di inizio"
-                            },
-                            "type": "DateRangeIndex"
+        "@id": "http://localhost:8080/Plone/++api++/@rer-search?SearchableText=foo",
+        "facets": [
+            {
+                "index": "group",
+                "items": [
+                    {
+                        "id": "all",
+                        "items": {},
+                        "label": {
+                            "it": "Tutti i contenuti (5)"
                         }
-                    ],
-                    "icon": "",
-                    "id": "eventi",
-                    "label": {
-                        "en": "Events (1)",
-                        "it": "Eventi (1)"
                     },
-                    "portal_types": [
-                        "Event"
-                    ]
-                }
-            ],
-            "label": {
-                "it": "Cosa"
-            },
-            "type": "Groups"
-        },
-        {
-            "index": "Subject",
-            "items": [
-                {
-                    "label": "aaa (2)",
-                    "value": "aaa"
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "pagine",
+                        "label": {
+                            "en": "Documents (1)",
+                            "it": "Pagine (1)"
+                        },
+                        "portal_types": [
+                            "Document"
+                        ]
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "notizie",
+                        "label": {
+                            "en": "News (2)",
+                            "it": "Notizie (2)"
+                        },
+                        "portal_types": [
+                            "News Item",
+                            "ExternalNews"
+                        ]
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "bandi",
+                        "label": {
+                            "en": "Announcements (1)",
+                            "it": "Bandi (1)"
+                        },
+                        "portal_types": [
+                            "Bando"
+                        ]
+                    },
+                    {
+                        "advanced_filters": {},
+                        "icon": "",
+                        "id": "file-e-immagini",
+                        "label": {
+                            "en": "Files and images (0)",
+                            "it": "File e immagini (0)"
+                        },
+                        "portal_types": [
+                            "File",
+                            "Image"
+                        ]
+                    },
+                    {
+                        "advanced_filters": [
+                            {
+                                "index_end": "end",
+                                "index_start": "start",
+                                "label_end": {
+                                    "it": "Data di fine"
+                                },
+                                "label_start": {
+                                    "it": "Data di inizio"
+                                },
+                                "type": "DateRangeIndex"
+                            }
+                        ],
+                        "icon": "",
+                        "id": "eventi",
+                        "label": {
+                            "en": "Events (1)",
+                            "it": "Eventi (1)"
+                        },
+                        "portal_types": [
+                            "Event"
+                        ]
+                    }
+                ],
+                "label": {
+                    "it": "Cosa"
                 },
-                {
-                    "label": "bbb (1)",
-                    "value": "bbb"
-                }
-            ],
-            "label": {
-                "en": "Keywords",
-                "it": "Parole chiave"
+                "type": "Groups"
             },
-            "type": "KeywordIndex"
-        }
-    ],
-    "items": [
-        {
-            "@id": "http://localhost:8080/Plone/xxx",
-            "@type": "Document",
-            "UID": "33fe109d445d4e1db4b46afae8301950",
-            "description": "",
-            "id": "xxx",
-            "image_field": "",
-            "image_scales": null,
-            "review_state": "published",
-            "title": "Pagina foo",
-            "type_title": "Pagina"
-        },
-        ...
-    ],
-    "items_total": 5
-}
+            {
+                "index": "Subject",
+                "items": [
+                    {
+                        "label": "aaa (2)",
+                        "value": "aaa"
+                    },
+                    {
+                        "label": "bbb (1)",
+                        "value": "bbb"
+                    }
+                ],
+                "label": {
+                    "en": "Keywords",
+                    "it": "Parole chiave"
+                },
+                "type": "KeywordIndex"
+            }
+        ],
+        "items": [
+            {
+                "@id": "http://localhost:8080/Plone/xxx",
+                "@type": "Document",
+                "UID": "33fe109d445d4e1db4b46afae8301950",
+                "description": "",
+                "id": "xxx",
+                "image_field": "",
+                "image_scales": null,
+                "review_state": "published",
+                "title": "Pagina foo",
+                "type_title": "Pagina"
+            },
+            ...
+        ],
+        "items_total": 5
+    }
 
 Advanced filters for groups
 ===========================
