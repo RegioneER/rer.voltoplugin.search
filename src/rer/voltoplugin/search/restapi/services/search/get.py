@@ -47,7 +47,6 @@ class SearchGet(Service):
     def reply(self):
         # mark request with custom layer to be able to override catalog serializer and add facets
         alsoProvides(self.request, IRERSearchMarker)
-
         query = filter_query_for_search()
         path_infos = self.get_path_infos(query=query)
 
@@ -114,27 +113,10 @@ class SearchGet(Service):
                 continue
             if index_name in ["site_name", "group"]:
                 continue
-            # if index_name == "portal_type":
-            #     for type_data in facet_mapping.get("items", []):
-            #         if type_data.get("id", "") == "all":
-            #             counter = sum(v for k, v in index_facets.items())
-            #         else:
-            #             portal_types = type_data.get("portal_types", [])
-            #             counter = sum(
-            #                 v for k, v in index_facets.items() if k in portal_types
-            #             )
-            #         for lang, label in type_data.get("label", {}).items():
-            #             type_data["label"][lang] = f"{label} ({counter})"
-            # else:
-            #     facet_mapping["items"] = [
-            #         {"label": f"{k} ({v})", "value": k} for k, v in index_facets.items()
-            #     ]
             facet_mapping["items"] = [
                 {"label": f"{k} ({v})", "value": k} for k, v in index_facets.items()
             ]
 
-        # site_facets = self.handle_sites_facet(data=data, query=query)
-        # new_facets.insert(0, site_facets)
         self.handle_groups_facet(query=query, data=data, facets=new_facets)
         self.handle_sites_facet(query=query, data=data, facets=new_facets)
         return new_facets
@@ -235,67 +217,6 @@ class SearchGet(Service):
         }
         facets.insert(0, sites_facets)
 
-    # def handle_sites_facet(self, data, query):
-    #     site = query.get("site_name", "")
-    #     sites = []
-    #     site_title = get_site_title()
-
-    #     if site and site != "all":
-    #         # we need to do an additional query in solr, to get the results
-    #         # unfiltered by site_name
-    #         new_query = deepcopy(query)
-    #         del new_query["site_name"]
-    #         # simplify returned result data
-    #         new_query["facet_fields"] = ["site_name"]
-    #         new_query["metadata_fields"] = ["UID"]
-    #         new_data = SolrSearchHandler(self.context, self.request).search(new_query)
-    #         sites = new_data["facets"]["site_name"]
-    #     else:
-    #         sites = data["facets"]["site_name"]
-
-    #     # convert it into a dict, to better iterate
-    #     sites = {k: v for d in sites for k, v in d.items()}
-    #     all_count = sum(v for k, v in sites.items())
-    #     current_count = sum(v for k, v in sites.items() if k == site_title)
-
-    #     labels = {}
-    #     all_labels = {}
-    #     current_site_labels = {}
-    #     registry = getUtility(IRegistry)
-    #     for lang in registry["plone.available_languages"]:
-    #         all_labels[lang] = api.portal.translate(
-    #             _(
-    #                 "all_sites_label",
-    #                 default="All Regione Emilia-Romagna sites (${count})",
-    #                 mapping={"count": all_count},
-    #             ),
-    #             lang=lang,
-    #         )
-    #         current_site_labels[lang] = api.portal.translate(
-    #             _(
-    #                 "current_site_label",
-    #                 default="In current website (${count})",
-    #                 mapping={"count": current_count},
-    #             ),
-    #             lang=lang,
-    #         )
-    #         labels[lang] = api.portal.translate(
-    #             _("where_label", default="Where"), lang=lang
-    #         )
-
-    #     all_facets = {"id": "all_sites", "label": all_labels}
-    #     current_site_facets = {
-    #         "id": site_title,
-    #         "label": current_site_labels,
-    #     }
-    #     # now that we have
-    #     return {
-    #         "index": "site_name",
-    #         "items": [all_facets, current_site_facets],
-    #         "type": "SiteName",
-    #         "label": labels,
-    #     }
-
     def get_path_infos(self, query):
         if "path" not in query:
             return {}
@@ -325,89 +246,3 @@ class SearchLocalGet(SearchGet):
     @property
     def solr_search_enabled(self):
         return False
-
-
-# def handle_sites_and_groups_facet(self, facets, query):
-
-#         # we need to do an additional query in solr, to get the results
-#         # unfiltered by site_name and types
-#         new_query = deepcopy(query)
-#         if "site_name" in query:
-#             del new_query["site_name"]
-#         if "portal_type" in query:
-#             del new_query["portal_type"]
-
-#         # simplify returned result data
-#         new_query["facet_fields"] = ["site_name", "portal_type"]
-#         new_query["metadata_fields"] = ["UID"]
-#         new_data = SolrSearchHandler(self.context, self.request).search(new_query)
-
-#         self.handle_groups_facet(facets=facets, data=new_data)
-#         facets.insert(0, self.handle_sites_facet(data=new_data))
-
-#     def handle_groups_facet(self, facets, data):
-#         types_facets = data["facets"]["portal_type"]
-#         # convert it into a dict, to better iterate
-#         types_facets = {k: v for d in types_facets for k, v in d.items()}
-
-#         for facet_mapping in facets:
-#             if facet_mapping.get("index", "") != "group":
-#                 continue
-#             for type_data in facet_mapping.get("items", []):
-#                 if type_data.get("id", "") == "all":
-#                     counter = sum(v for k, v in types_facets.items())
-#                 else:
-#                     portal_types = type_data.get("portal_types", [])
-#                     counter = sum(
-#                         v for k, v in types_facets.items() if k in portal_types
-#                     )
-#                 for lang, label in type_data.get("label", {}).items():
-#                     type_data["label"][lang] = f"{label} ({counter})"
-
-#     def handle_sites_facet(self, data):
-#         site_title = get_site_title()
-#         sites = data["facets"]["site_name"]
-
-#         # convert it into a dict, to better iterate
-#         sites = {k: v for d in sites for k, v in d.items()}
-
-#         all_count = sum(v for k, v in sites.items())
-#         current_count = sum(v for k, v in sites.items() if k == site_title)
-
-#         labels = {}
-#         all_labels = {}
-#         current_site_labels = {}
-#         registry = getUtility(IRegistry)
-#         for lang in registry["plone.available_languages"]:
-#             all_labels[lang] = api.portal.translate(
-#                 _(
-#                     "all_sites_label",
-#                     default="All Regione Emilia-Romagna sites (${count})",
-#                     mapping={"count": all_count},
-#                 ),
-#                 lang=lang,
-#             )
-#             current_site_labels[lang] = api.portal.translate(
-#                 _(
-#                     "current_site_label",
-#                     default="In current website (${count})",
-#                     mapping={"count": current_count},
-#                 ),
-#                 lang=lang,
-#             )
-#             labels[lang] = api.portal.translate(
-#                 _("where_label", default="Where"), lang=lang
-#             )
-
-#         all_facets = {"id": "all_sites", "label": all_labels}
-#         current_site_facets = {
-#             "id": site_title,
-#             "label": current_site_labels,
-#         }
-#         # now that we have
-#         return {
-#             "index": "site_name",
-#             "items": [all_facets, current_site_facets],
-#             "type": "SiteName",
-#             "label": labels,
-#         }

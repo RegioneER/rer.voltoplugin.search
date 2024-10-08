@@ -29,6 +29,16 @@ class IRERVoltopluginSearchCustomFilters(Interface):
         """ """
 
 
+class IRERVoltopluginSearchCustomQuery(Interface):
+    """Marker interface"""
+
+    def __init__(context, request):
+        """Adapts context and the request."""
+
+    def __call__(query):
+        """ """
+
+
 class IRERSearchMarker(Interface):
     """
     Marker interface

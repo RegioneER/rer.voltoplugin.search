@@ -8,10 +8,12 @@ from Products.DateRecurringIndex.index import DateRecurringIndex
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
+from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomQuery
 from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
+from zope.component import subscribers
 
 import json
 import logging
@@ -156,4 +158,11 @@ def filter_query_for_search():
     for index in ["metadata_fields"]:
         if index in query:
             del query[index]
+
+    # check if there are some adapters that fix query
+    handlers = subscribers(
+        (api.portal.get(), request), IRERVoltopluginSearchCustomQuery
+    )
+    for handler in sorted(handlers, key=lambda h: h.order):
+        query = handler(query=query)
     return query
