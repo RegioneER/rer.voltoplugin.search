@@ -85,7 +85,6 @@ class LazyCatalogResultSerializer(BaseSerializer):
 
             if index_id not in counters:
                 continue
-
             facet_values = sorted(
                 [
                     {"label": f"{k} ({v})", "value": k}

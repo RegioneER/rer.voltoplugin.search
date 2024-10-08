@@ -7,13 +7,13 @@ from plone.restapi.search.utils import unflatten_dotted_dict
 from Products.DateRecurringIndex.index import DateRecurringIndex
 from rer.voltoplugin.search import _
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomFilters
-from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
 from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchCustomQuery
+from rer.voltoplugin.search.interfaces import IRERVoltopluginSearchSettings
 from zope.component import ComponentLookupError
 from zope.component import getMultiAdapter
 from zope.component import getUtility
-from zope.globalrequest import getRequest
 from zope.component import subscribers
+from zope.globalrequest import getRequest
 
 import json
 import logging
