@@ -155,6 +155,10 @@ def filter_query_for_search():
             else:
                 query[key]["query"] = DateTime(value["query"])
 
+        if key == "path":
+            portal_path = "/".join(api.portal.get().getPhysicalPath())
+            if not value.get("query", "").startswith(portal_path):
+                query[key]["query"] = f"{portal_path}{value['query']}"
     for index in ["metadata_fields"]:
         if index in query:
             del query[index]

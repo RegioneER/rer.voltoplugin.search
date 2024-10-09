@@ -48,7 +48,6 @@ class SearchGet(Service):
         # mark request with custom layer to be able to override catalog serializer and add facets
         alsoProvides(self.request, IRERSearchMarker)
         query = filter_query_for_search()
-        path_infos = self.get_path_infos(query=query)
 
         if not query.keys():
             return {
@@ -63,6 +62,8 @@ class SearchGet(Service):
         else:
             query["use_site_search_settings"] = True
             data = SearchHandler(self.context, self.request).search(query)
+
+        path_infos = self.get_path_infos(query=query)
         if path_infos:
             data["path_infos"] = path_infos
         return data
