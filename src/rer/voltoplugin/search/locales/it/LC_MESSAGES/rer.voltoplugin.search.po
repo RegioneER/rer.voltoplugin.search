@@ -27,8 +27,8 @@ msgid "Maximum number of words in search query"
 msgstr "Numero massimo di parole in una query di ricerca"
 
 #: rer/voltoplugin/search/profiles/default/controlpanel.xml
-msgid "RER Search Settings"
-msgstr "Impostazioni RER Search"
+msgid "RER Search"
+msgstr "RER Search"
 
 #: rer/voltoplugin/search/configure.zcml:24
 msgid "RER: Voltoplugin Search"
@@ -97,10 +97,10 @@ msgstr "Imposta la lunghezza massina di ogni singola parola ricercata. Le parole
 msgid "help_max_words"
 msgstr "Imposta il numero massimo di parole da cercare. Le parole in eccesso saranno omesse."
 
-#. Default: "RER Search Settings"
+#. Default: "RER Search"
 #: rer/voltoplugin/search/browser/controlpanel.py:8
 msgid "rer_volto_search_settings_controlpanel_label"
-msgstr "Impostazioni RER Search"
+msgstr "RER Search"
 
 #. Default: "If you fill this field, you can group search results by content-types."
 #: rer/voltoplugin/search/interfaces.py:65

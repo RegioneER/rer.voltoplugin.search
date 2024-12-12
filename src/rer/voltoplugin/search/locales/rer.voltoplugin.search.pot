@@ -30,7 +30,7 @@ msgid "Maximum number of words in search query"
 msgstr ""
 
 #: rer/voltoplugin/search/profiles/default/controlpanel.xml
-msgid "RER Search Settings"
+msgid "RER Search"
 msgstr ""
 
 #: rer/voltoplugin/search/configure.zcml:24
@@ -100,7 +100,7 @@ msgstr ""
 msgid "help_max_words"
 msgstr ""
 
-#. Default: "RER Search Settings"
+#. Default: "RER Search"
 #: rer/voltoplugin/search/browser/controlpanel.py:8
 msgid "rer_volto_search_settings_controlpanel_label"
 msgstr ""
