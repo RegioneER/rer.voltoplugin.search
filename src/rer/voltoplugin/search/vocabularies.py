@@ -67,16 +67,21 @@ class GroupingTypesVocabulary:
 
     def __call__(self, context):
         voc_id = "plone.app.vocabularies.ReallyUserFriendlyTypes"
+        factory = getUtility(IVocabularyFactory, voc_id)
+        data = factory(context)
         if HAS_SOLR:
             try:
                 if api.portal.get_registry_record(
                     "active", interface=IRerSolrpushSettings
                 ):
                     voc_id = "rer.solrpush.vocabularies.AvailablePortalTypes"
+                factory = getUtility(IVocabularyFactory, voc_id)
+                solr_data = factory(context)
+                if solr_data:
+                    data = solr_data
             except (KeyError, InvalidParameterError):
                 pass
-        factory = getUtility(IVocabularyFactory, voc_id)
-        return factory(context)
+        return data
 
 
 AdvancedFiltersVocabularyFactory = AdvancedFiltersVocabulary()

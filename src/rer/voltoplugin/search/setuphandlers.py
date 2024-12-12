@@ -1,5 +1,8 @@
 from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implementer
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import ISearchSchema
+from zope.component import getUtility
 
 
 @implementer(INonInstallable)
@@ -17,7 +20,15 @@ class HiddenProfiles:
 
 def post_install(context):
     """Post install script"""
-    # Do something at the end of the installation of this package.
+    # Re-enable some types from search
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ISearchSchema, prefix="plone")
+    enable_types = [
+        "Link",
+        "File",
+    ]
+    types = [x for x in settings.types_not_searched if x not in enable_types]
+    settings.types_not_searched = tuple(types)
 
 
 def uninstall(context):
