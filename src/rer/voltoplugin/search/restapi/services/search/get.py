@@ -29,7 +29,6 @@ import six
 
 
 class SearchGet(Service):
-    @property
     def solr_search_enabled(self):
         if not HAS_SOLR:
             return False
@@ -47,7 +46,11 @@ class SearchGet(Service):
     def reply(self):
         # mark request with custom layer to be able to override catalog serializer and add facets
         alsoProvides(self.request, IRERSearchMarker)
-        query = filter_query_for_search()
+        solr_search_enabled = self.solr_search_enabled()
+        if solr_search_enabled:
+            query = filter_query_for_search(expand_path=True)
+        else:
+            query = filter_query_for_search()
 
         if not query.keys():
             return {
@@ -56,14 +59,13 @@ class SearchGet(Service):
                 "items": [],
                 "items_total": 0,
             }
-
-        if self.solr_search_enabled:
+        if solr_search_enabled:
             data = self.do_solr_search(query=query)
         else:
             query["use_site_search_settings"] = True
             data = SearchHandler(self.context, self.request).search(query)
 
-        path_infos = self.get_path_infos(query=query)
+        path_infos = self.get_path_infos(query=query, data=data)
         if path_infos:
             data["path_infos"] = path_infos
         return data
@@ -218,9 +220,14 @@ class SearchGet(Service):
         }
         facets.insert(0, sites_facets)
 
-    def get_path_infos(self, query):
+    def get_path_infos(self, query, data):
         if "path" not in query:
             return {}
+
+        items_total = 0
+        for facet in data.get("facets", []):
+            if facet.get("index", "") == "group":
+                items_total = facet.get("counters", {}).get("all", 0)
         registry = getUtility(IRegistry)
         site_settings = registry.forInterface(ISiteSchema, prefix="plone", check=False)
         site_title = getattr(site_settings, "site_title") or ""
@@ -239,11 +246,10 @@ class SearchGet(Service):
         if path != root_path:
             folder = api.content.get(path)
             if folder:
-                data["path_title"] = folder.title
+                data["path_title"] = f"{folder.title} ({items_total})"
         return data
 
 
 class SearchLocalGet(SearchGet):
-    @property
     def solr_search_enabled(self):
         return False

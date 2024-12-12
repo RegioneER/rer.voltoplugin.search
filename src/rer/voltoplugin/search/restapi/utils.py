@@ -119,9 +119,12 @@ def expand_advanced_filters(name):
         return {}
 
 
-def filter_query_for_search():
+def filter_query_for_search(expand_path=False):
     """
     Fix parameters
+
+    expand_path is needed because if path does not have the root path, search return 0 results.
+    In restapi search handler is not needed because it handle it
     """
     request = getRequest()
     query = deepcopy(request.form)
@@ -155,7 +158,7 @@ def filter_query_for_search():
             else:
                 query[key]["query"] = DateTime(value["query"])
 
-        if key == "path":
+        if expand_path and key == "path":
             portal_path = "/".join(api.portal.get().getPhysicalPath())
             if not value.get("query", "").startswith(portal_path):
                 query[key]["query"] = f"{portal_path}{value['query']}"
