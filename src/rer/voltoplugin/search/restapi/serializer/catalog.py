@@ -106,7 +106,7 @@ class LazyCatalogResultSerializer(BaseSerializer):
         """
         facet = [x for x in facets if x.get("index", "") == "group"][0]
 
-        query = filter_query_for_search()
+        query = filter_query_for_search(fix_path=True)
 
         if "portal_type" in query:
             # remove types filter because we need to have total count in groups

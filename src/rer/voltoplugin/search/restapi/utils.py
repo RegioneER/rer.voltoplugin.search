@@ -119,9 +119,12 @@ def expand_advanced_filters(name):
         return {}
 
 
-def filter_query_for_search():
+def filter_query_for_search(fix_path=False):
     """
-    Fix parameters
+    Fix query parameters
+    fix_path is a flag that is used to append site id to the queried path.
+    It is optional because when we use SearchHandler in @search endpoint, there
+    is already a method to fix path in query
     """
     request = getRequest()
     query = deepcopy(request.form)
@@ -155,7 +158,7 @@ def filter_query_for_search():
             else:
                 query[key]["query"] = DateTime(value["query"])
 
-        if key == "path":
+        if key == "path" and fix_path:
             portal_path = "/".join(api.portal.get().getPhysicalPath())
             if not value.get("query", "").startswith(portal_path):
                 query[key]["query"] = f"{portal_path}{value['query']}"
