@@ -47,7 +47,7 @@ class SearchGet(Service):
     def reply(self):
         # mark request with custom layer to be able to override catalog serializer and add facets
         alsoProvides(self.request, IRERSearchMarker)
-        query = filter_query_for_search()
+        query = filter_query_for_search(fix_path=self.solr_search_enabled)
 
         if not query.keys():
             return {
