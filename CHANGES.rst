@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
+1.0.1 (2025-02-20)
 ------------------
 
 - Fix path for SOLR searches.
