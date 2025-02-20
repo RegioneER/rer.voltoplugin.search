@@ -15,7 +15,7 @@ long_description = "\n\n".join(
 
 setup(
     name="rer.voltoplugin.search",
-    version="1.0.1",
+    version="1.0.2.dev0",
     description="Add-on RER for Plone to manage search results in Volto",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
