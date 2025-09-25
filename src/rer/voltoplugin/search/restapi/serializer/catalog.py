@@ -31,7 +31,6 @@ class LazyCatalogResultSerializer(BaseSerializer):
         pc = api.portal.get_tool(name="portal_catalog")
 
         facets = get_facets_data()
-
         self.update_portal_type_facet(facets=facets)
 
         counters = {}
@@ -108,13 +107,13 @@ class LazyCatalogResultSerializer(BaseSerializer):
 
         query = filter_query_for_search(fix_path=True)
 
-        if "portal_type" in query:
-            # remove types filter because we need to have total count in groups
-            del query["portal_type"]
+        # force portal_types to be all searchable types to have correct counts
+        plone_utils = api.portal.get_tool(name="plone_utils")
+        query["portal_type"] = plone_utils.getUserFriendlyTypes([])
 
         portal_catalog = api.portal.get_tool(name="portal_catalog")
-        brains_to_iterate = portal_catalog(**query)
 
+        brains_to_iterate = portal_catalog(**query)
         # count occurrences
         counters = {"all": 0}
         for brain in brains_to_iterate:
