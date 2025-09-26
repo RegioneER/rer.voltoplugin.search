@@ -61,6 +61,11 @@ class SearchGet(Service):
             data = self.do_solr_search(query=query)
         else:
             query["use_site_search_settings"] = True
+
+            # There is a bug in plone.restapi SearchHandler that remove effective when set,
+            # but set it by default if not set
+            if "sort_order" in query:
+                del query["sort_order"]
             data = SearchHandler(self.context, self.request).search(query)
 
         path_infos = self.get_path_infos(query=query)
