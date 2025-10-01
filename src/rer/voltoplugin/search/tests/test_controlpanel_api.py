@@ -37,4 +37,4 @@ class RERVoltopluginSearchControlpanelTest(unittest.TestCase):
         response = self.api_session.get("/@controlpanels")
 
         titles = [x.get("title") for x in response.json()]
-        self.assertIn("RER Search Settings", titles)
+        self.assertIn("RER Search", titles)
