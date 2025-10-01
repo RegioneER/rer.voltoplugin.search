@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.2 (unreleased)
+1.0.2 (2025-10-01)
 ------------------
 
 - Fix facets counts in catalog serializer.
